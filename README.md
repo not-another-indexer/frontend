@@ -1,5 +1,9 @@
-# Vue 3 + TypeScript + Vite
+# NAI-Frontend
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Instalation guide
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+1. Clone the repository: `git clone https://github.com/NAI-tech/NAI-Frontend.git`
+2. Install runtime ([nodejs](https://nodejs.org/en), [yarn](https://yarnpkg.com/) or [bun](https://bun.sh/)) via your package manager (or another way)
+3. Install dependencies: `npm install`, `yarn install` or `bun install`
+4. Run dev environment: `npm run dev`, `yarn run dev` or `bun run dev`
+
