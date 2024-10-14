@@ -1,16 +1,19 @@
 <script setup lang="ts">
 
-const _ = defineProps<{
+const props = defineProps<{
   isDisabled: boolean,
-  action: () => void,
   buttonText: string,
+}>()
+
+const emits = defineEmits<{
+  (e: 'action'): void
 }>()
 
 </script>
 
 <template>
   <div class="field has-text-centered">
-    <button class="button is-link" @click="action()" :disabled="isDisabled">{{ buttonText }}</button>
+    <button class="button is-link" @click="$emit('action')" :disabled="isDisabled">{{ buttonText }}</button>
   </div>
 </template>
 
