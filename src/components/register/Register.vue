@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useNotification } from '@kyvg/vue3-notification';
-import LoginField from '../../assets/LoginField.vue';
-import PasswordField from '../../assets/PasswordField.vue';
 import { computed, ref } from 'vue';
 import { useLoginRules } from '../../validations/login';
 import { usePasswordRules } from '../../validations/password';
 import useVuelidate from '@vuelidate/core';
 import FieldButton from '../../assets/FieldButton.vue';
+import InputField from '../../assets/InputField.vue';
+import { helpers, sameAs } from '@vuelidate/validators';
 
 const notification = useNotification()
 
@@ -16,7 +16,9 @@ const repeatedPassword = ref("")
 
 const loginRules = useLoginRules()
 const passwordRules = usePasswordRules()
-const repeatedPasswordRules = usePasswordRules()
+const repeatedPasswordRules = {
+  rule: helpers.withMessage("Password should be equal", sameAs(password))
+} 
 
 const v = useVuelidate(
   {
@@ -33,7 +35,7 @@ const v = useVuelidate(
 
 const loginErrorMessages = computed(() => v.value.login.$silentErrors.map(e => e.$message))
 const passwordErrorMessages = computed(() => v.value.password.$silentErrors.map(e => e.$message))
-const repeatedPasswordErrorMessages = computed(() => v.value.password.$silentErrors.map(e => e.$message))
+const repeatedPasswordErrorMessages = computed(() => v.value.repeatedPassword.$silentErrors.map(e => e.$message))
 
 const registerAction = () => {
   if (v.value.$invalid) {
@@ -63,9 +65,9 @@ const registerButtonText = "Register"
           <div class="column is-6">
             <div class="box">
               <h2 class="title is-2 has-text-centered">Registration</h2>
-              <LoginField v-model:login="login" :error-messages="loginErrorMessages" :is-invalid="v.login.$invalid"/>
-						  <PasswordField v-model:password="password" :error-messages="passwordErrorMessages" :is-invalid="v.password.$invalid" />
-						  <PasswordField v-model:password="repeatedPassword" :error-messages="repeatedPasswordErrorMessages" :is-invalid="v.repeatedPassword.$invalid" />
+              <InputField :label="'Login'" v-model:input="login" :error-messages="loginErrorMessages" :is-invalid="v.login.$invalid" :type="'text'" :placeholder="'for example: john_doe'"/>
+						  <InputField :label="'Password'" v-model:input="password" :error-messages="passwordErrorMessages" :is-invalid="v.password.$invalid" :type="'password'" :placeholder="'for example: ********'"/>
+						  <InputField :label="'Repeat password'" v-model:input="repeatedPassword" :error-messages="repeatedPasswordErrorMessages" :is-invalid="v.repeatedPassword.$invalid" :type="'password'" :placeholder="'********'"/>
               <FieldButton v-on:action="registerAction" :is-disabled="v.$invalid" :button-text="registerButtonText" />
             </div>
           </div>
