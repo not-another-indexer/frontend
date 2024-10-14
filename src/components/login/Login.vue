@@ -3,10 +3,9 @@ import { computed, ref } from 'vue';
 import { useNotification } from '@kyvg/vue3-notification';
 import useVuelidate from '@vuelidate/core';
 import { useLoginRules } from '../../validations/login';
-import LoginField from '../../assets/LoginField.vue';
 import { usePasswordRules } from '../../validations/password';
-import PasswordField from '../../assets/PasswordField.vue';
 import FieldButton from '../../assets/FieldButton.vue';
+import InputField from '../../assets/InputField.vue';
 
 const notification = useNotification()
 
@@ -46,8 +45,6 @@ const loginAction = () => {
 	})
 }
 
-const loginButtonText = "Login"
-
 </script>
 
 <template>
@@ -58,9 +55,9 @@ const loginButtonText = "Login"
 					<div class="column is-6">
    	 				<div class="box">
 							<h2 class="title is-2 has-text-centered">Login</h2>
-							<LoginField v-model:login="login" :error-messages="loginErrorMessages" :is-invalid="v.login.$invalid" />
-							<PasswordField v-model:password="password" :error-messages="passwordErrorMessages" :is-invalid="v.password.$invalid" />
-							<FieldButton v-on:action="loginAction" :is-disabled="v.$invalid" :button-text="loginButtonText"/>
+							<InputField :label="'Login'" v-model:input="login" :error-messages="loginErrorMessages" :is-invalid="v.login.$invalid" :type="'text'" :placeholder="'for example: john_doe'" />
+							<InputField :label="'Password'" v-model:input="password" :error-messages="passwordErrorMessages" :is-invalid="v.password.$invalid" :type="'password'" :placeholder="'for example: ********'" />
+							<FieldButton v-on:action="loginAction" :is-disabled="v.$invalid" :button-text="'Login'"/>
 						</div>
 					</div>
 				</div>
