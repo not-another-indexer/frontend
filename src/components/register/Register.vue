@@ -46,7 +46,7 @@ const registerAction = () => {
   }
 
   notification.notify({
-    text: "login: " + login + "; password: " + password,
+    text: "login: " + login.value + "; password: " + password.value,
     type: "success",
   })
 }
