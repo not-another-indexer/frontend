@@ -41,7 +41,7 @@ const loginAction = () => {
 	}
 
 	notification.notify({
-		text: "login: " + login + "; password: " + password,
+		text: "login: " + login.value + "; password: " + password.value,
 		type: "success",
 	})
 }
@@ -60,7 +60,7 @@ const loginButtonText = "Login"
 							<h2 class="title is-2 has-text-centered">Login</h2>
 							<LoginField v-model:login="login" :error-messages="loginErrorMessages" :is-invalid="v.login.$invalid" />
 							<PasswordField v-model:password="password" :error-messages="passwordErrorMessages" :is-invalid="v.password.$invalid" />
-							<FieldButton :action="loginAction" :is-disabled="v.$invalid" :button-text="loginButtonText"/>
+							<FieldButton v-on:action="loginAction" :is-disabled="v.$invalid" :button-text="loginButtonText"/>
 						</div>
 					</div>
 				</div>
