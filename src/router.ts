@@ -1,20 +1,30 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Login from "./components/login/Login.vue";
 import Register from "./components/register/Register.vue";
+import Galleries from "./components/galleries/Galleries.vue";
+import SignIn from "./components/sign_in/SignIn.vue";
+import Gallery from "./components/gallery/Gallery.vue";
 
 const routes = [
     {
         path: '/',
-        redirect: '/login',
+        redirect: '/sign-in',
     },
     {
-        path: '/login',
-        component: Login,
+        path: '/sign-in',
+        component: SignIn,
     },
     {
         path: '/register',
         component: Register,
     },
+    {
+        path: '/user/galleries',
+        component: Galleries,
+    },
+    {
+        path: '/user/galleries/:id',
+        component: Gallery,
+    }
 ]
 
 export const router = createRouter({
