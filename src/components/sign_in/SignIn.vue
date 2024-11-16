@@ -82,8 +82,6 @@ const handleSignInError = (err: any) => {
 }
 
 const handleRpcError = (err: RpcError) => {
-	console.log(JSON.stringify(err))
-	console.log(GrpcStatusCode.UNAUTHENTICATED.toLocaleString())
 	switch (err.code) {
 		case GrpcStatusCode[GrpcStatusCode.UNAUTHENTICATED]: {
 			notification.notify({
