@@ -12,7 +12,7 @@ const router = useRouter()
 
 const { mutate } = useDeleteGallery()
 
-const isDeleteHovered = ref(false);
+const isDeleteHovered = ref(false)
 
 const deleteGalleryAction = () => {
   mutate(props.id) 
