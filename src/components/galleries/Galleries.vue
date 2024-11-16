@@ -11,6 +11,7 @@ refresh()
 const isCreateButtonHovered = ref(false)
 const isSearchButtonHovered = ref(false)
 const isUserButtonHovered = ref(false)
+
 const isCreateGalleryModalOpened = ref(false)
 
 </script>
