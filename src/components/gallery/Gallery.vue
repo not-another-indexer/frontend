@@ -4,6 +4,7 @@ import { useGalleryImages } from '../../queries/gallery';
 import { useNotification } from '@kyvg/vue3-notification';
 import { ref } from 'vue';
 import AddImageModal from './AddImageModal.vue';
+import SingleImage from './SingleImage.vue';
 
 const notification = useNotification()
 
@@ -17,12 +18,50 @@ offset.value = 0
 
 refresh()
 
-const isAddImageModalOpened = ref(true)
+const isAddImageButtonHovered = ref(false)
+
+const isAddImageModalOpened = ref(false)
 
 </script>
 
 <template>
   <AddImageModal v-model:is-opened="isAddImageModalOpened" :gallery-id="idParam" />
+  <section class="hero is-small">
+    <div class="hero-body">
+      <section class="hero is-small">
+        <nav class="level">
+          <div class="level-left">
+            <div class="level-item">
+ 
+            </div>
+          </div>
+ 
+          <div class="level-right">
+            <nav class="level is-mobile">
+              <div class="level-item">
+                <button class="button" :class="{ 'is-primary': isAddImageButtonHovered }" v-on:mouseenter="isAddImageButtonHovered = true" v-on:mouseleave="isAddImageButtonHovered = false" @click="isAddImageModalOpened = true">
+                  Add image
+                </button> 
+              </div>
+            </nav>
+          </div>
+        </nav>
+      </section>
+    </div>
+  </section>
+  
+  <div v-if="data" class="container is-fluid">
+    <div v-if="data.pContent.length === 0" class="has-text-centered">
+      No available images.
+    </div>
+    <div v-else class="grid">
+      <div class="cell" v-for="imageData in data.pContent">
+        <Suspense>
+          <SingleImage :id="imageData.pImageId" />
+        </Suspense>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
