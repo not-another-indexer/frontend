@@ -10,15 +10,17 @@ export const handleRpcError = (
 ) => {
   if (err instanceof UserUndefinedError) {
     notification.notify({
-      "text": "You are not signed in. Please, do it",
-      "type": "warn",
+      text: "You are not signed in. Please, do it",
+      type: "warn",
+      duration: -1, 
     })
 
     router.push("/sign-in")
   } else if (err instanceof TokenRefreshError) {
     notification.notify({
-      "text": "Cannot keep you signed in: " + err.message,
-      "type": "warn",
+      text: "Cannot keep you signed in: " + err.message,
+      type: "warn",
+      duration: -1,
     })
 
     router.push("/sign-in")
