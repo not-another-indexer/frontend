@@ -11,6 +11,8 @@ const notification = useNotification()
 
 const userStore = useUserStore()
 
+const isGoToRegisterButtonHovered = ref(false)
+
 const username = ref("")
 const password = ref("")
 
@@ -75,10 +77,41 @@ const handleSignInError = (err: any) => {
 	})
 }
 
+const goToRegister = () => {
+	router.push("/register")
+}
+
 </script>
 
 <template>
 	<section class="hero is-fullheight">
+
+		<div class="hero-head">
+			<section class="hero is-small">
+				<div class="hero-body">
+					<div class="container is-fluid">
+						<nav class="level">
+							<div class="level-left"></div>
+							<div class="level-right">
+								<div class="level-item">
+									<nav class="level is-mobile">
+										<div class="level-item">
+											Not registered yet?
+										</div>
+										<div class="level-item">
+											<button @click="goToRegister" class="button" :class="{ 'is-primary': isGoToRegisterButtonHovered }" v-on:mouseenter="isGoToRegisterButtonHovered = true" v-on:mouseleave="isGoToRegisterButtonHovered = false">
+												Register
+											</button>
+										</div>
+									</nav>
+								</div>
+							</div>
+						</nav>
+					</div>
+				</div>
+			</section>
+		</div>
+
 		<div class="hero-body">
 			<div class="container">
 				<div class="columns is-centered">
@@ -103,7 +136,9 @@ const handleSignInError = (err: any) => {
               </div>
 
               <div class="field has-text-centered">
-                <button class="button is-link" @click="signInAction" :disabled="v.$invalid">Login</button>
+                <button class="button is-link" @click="signInAction" :disabled="v.$invalid">
+									Sign in
+								</button>
               </div>
 						</div>
 					</div>
