@@ -67,9 +67,9 @@ const handleSignInError = (err: any) => {
 	let message = ""	
 	if (err instanceof RpcError) {
 		const rpcErr = err as RpcError
-		message = "Cannot login: " + rpcErr.message
+		message = "Cannot sign in: " + rpcErr.message
 	} else {
-		message = "Cannot login due to unknown error"
+		message = "Cannot sign in due to unknown error"
 	}
 
 	notification.notify({
