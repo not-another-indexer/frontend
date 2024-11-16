@@ -10,6 +10,8 @@ import { RpcError } from '@protobuf-ts/runtime-rpc';
 const notification = useNotification()
 const router = useRouter()
 
+const isGoToSignInButtonHovered = ref(false)
+
 const username = ref("")
 const displayName = ref("")
 const password = ref("")
@@ -100,10 +102,41 @@ const handleRegisterError = (err: any) => {
   })
 }
 
+const goToSignIn = () => {
+  router.push("/sign-in")
+}
+
 </script>
 
 <template>
   <section class="hero is-fullheight">
+
+		<div class="hero-head">
+			<section class="hero is-small">
+				<div class="hero-body">
+					<div class="container is-fluid">
+						<nav class="level">
+							<div class="level-left"></div>
+							<div class="level-right">
+								<div class="level-item">
+									<nav class="level is-mobile">
+										<div class="level-item">
+                      Already registered?
+										</div>
+										<div class="level-item">
+											<button @click="goToSignIn" class="button" :class="{ 'is-primary': isGoToSignInButtonHovered }" v-on:mouseenter="isGoToSignInButtonHovered = true" v-on:mouseleave="isGoToSignInButtonHovered = false">
+                        Sign in
+											</button>
+										</div>
+									</nav>
+								</div>
+							</div>
+						</nav>
+					</div>
+				</div>
+			</section>
+		</div>
+
     <div class="hero-body">
       <div class="container">
         <div class="columns is-centered">
