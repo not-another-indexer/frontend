@@ -3,6 +3,7 @@ import Register from "./components/register/Register.vue";
 import Galleries from "./components/galleries/Galleries.vue";
 import SignIn from "./components/sign_in/SignIn.vue";
 import Gallery from "./components/gallery/Gallery.vue";
+import NotFound from "./components/error/NotFound.vue";
 
 const routes = [
     {
@@ -24,7 +25,11 @@ const routes = [
     {
         path: '/user/galleries/:id',
         component: Gallery,
-    }
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        component: NotFound,
+    },
 ]
 
 export const router = createRouter({
