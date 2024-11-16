@@ -6,6 +6,7 @@ import { helpers, required } from '@vuelidate/validators';
 import { RpcError } from '@protobuf-ts/runtime-rpc';
 import { useUserStore } from '../../stores/UserStore';
 import { router } from '../../router';
+import { GrpcStatusCode } from '@protobuf-ts/grpcweb-transport';
 
 const notification = useNotification()
 
@@ -64,18 +65,41 @@ const handleSignInResponse = () => {
 }
 
 const handleSignInError = (err: any) => {
-	let message = ""	
 	if (err instanceof RpcError) {
-		const rpcErr = err as RpcError
-		message = "Cannot sign in: " + rpcErr.message
-	} else {
-		message = "Cannot sign in due to unknown error"
-	}
+		handleRpcError(err)
+		return
+	} 
 
 	notification.notify({
-		text: message,
+		text: "Cannot sign in due to unknown error",
+		duration: -1,
 		type: "error",
 	})
+}
+
+const handleRpcError = (err: RpcError) => {
+	console.log(JSON.stringify(err))
+	console.log(GrpcStatusCode.UNAUTHENTICATED.toLocaleString())
+	switch (err.code) {
+		case GrpcStatusCode[GrpcStatusCode.UNAUTHENTICATED]: {
+			notification.notify({
+				title: "Unable to sign in",
+				text: "Invalid username or password",
+				type: "error",
+				duration: -1,
+				ignoreDuplicates: true,
+			})			
+			break
+
+		}
+		default: {
+			notification.notify({
+				text: "Unexpected error, cannot sign in",
+				duration: -1,
+				type: "error",
+			})
+		}
+	}
 }
 
 const goToRegister = () => {
