@@ -11,6 +11,8 @@ const notification = useNotification()
 const router = useRouter()
 
 const isGoToSignInButtonHovered = ref(false)
+const isPasswordHidden = ref(true)
+const isRepeatedPasswordHidden = ref(true)
 
 const username = ref("")
 const displayName = ref("")
@@ -162,17 +164,29 @@ const goToSignIn = () => {
 
               <div class="field">
                 <label class="label">Password</label>
-                <div class="control">
-                  <input type="password" v-model="password" :class="{ 'is-danger': v.password.$invalid, 'input': true }" placeholder="For example: ********">
-                </div>
+                <nav class="level is-mobile">
+                  <input :type="isPasswordHidden ? 'password' : 'text'" v-model="password" :class="{ 'is-danger': v.password.$invalid, 'input': true }" placeholder="For example: ********">
+    							<button class="button" @click="isPasswordHidden = !isPasswordHidden">
+										<span class="icon is-small">
+      								<i v-if="isPasswordHidden" class="pi pi-eye-slash" />
+											<i v-else class="pi pi-eye" />
+										</span>
+									</button>
+                </nav>
                 <p v-if="v.password.$invalid" v-for="m in passwordErrorMessages" class="help is-danger">{{ m }}</p>
               </div>
 
               <div class="field">
                 <label class="label">Repeat password</label>
-                <div class="control">
-                  <input type="password" v-model="repeatedPassword" :class="{ 'is-danger': v.repeatedPassword.$invalid, 'input': true }" placeholder="For example: ********">
-                </div>
+                <nav class="level is-mobile">
+                  <input :type="isRepeatedPasswordHidden ? 'password' : 'text'" v-model="repeatedPassword" :class="{ 'is-danger': v.repeatedPassword.$invalid, 'input': true }" placeholder="For example: ********">
+    							<button class="button" @click="isRepeatedPasswordHidden = !isRepeatedPasswordHidden">
+										<span class="icon is-small">
+      								<i v-if="isRepeatedPasswordHidden" class="pi pi-eye-slash" />
+											<i v-else class="pi pi-eye" />
+										</span>
+                  </button>
+                </nav>
                 <p v-if="v.repeatedPassword.$invalid" v-for="m in repeatedPasswordErrorMessages" class="help is-danger">{{ m }}</p>
               </div>
 
