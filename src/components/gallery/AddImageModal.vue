@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useNotification } from '@kyvg/vue3-notification';
-import { ref } from 'vue';
+import { useAddImage } from '../../mutations/addImage';
 
 const notification = useNotification()
 
@@ -9,8 +9,9 @@ const props = defineProps<{
   galleryId: string,
 }>()
 
-const description = ref("")
-const file = ref<File | null>()
+const { mutate, imageBytes, galleryId, description, extension} = useAddImage()
+
+galleryId.value = props.galleryId
 
 const onFileChange = (e: Event) => {
   if (e.target === null) {
@@ -23,13 +24,31 @@ const onFileChange = (e: Event) => {
   }
 
   const target = e.target as HTMLInputElement
-  if (target && target.files) {
-    file.value = target.files[0];
+  if (!target || !target.files || target.files.length === 0) {
+    notification.notify({
+      "text": "Expected file",
+      "type": "warn",
+    })
+    
+    return
   }
+
+  const file = target.files[0]
+
+  const reader = new FileReader();
+  reader.onload = (_) => {
+    const arrayBuffer = reader.result as ArrayBuffer
+    const bytes = new Uint8Array(arrayBuffer)
+    imageBytes.value = bytes
+  }
+  reader.readAsArrayBuffer(file)
+
+  extension.value = file.name.slice(file.name.lastIndexOf(".") + 1)
 }
 
 const addImageAction = () => {
-
+  mutate()
+  console.log("I DID")
 }
 
 </script>
