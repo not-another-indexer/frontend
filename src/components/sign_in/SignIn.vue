@@ -40,6 +40,10 @@ const usernameErrorMessages = computed(() => v.value.username.$silentErrors.map(
 const passwordErrorMessages = computed(() => v.value.password.$silentErrors.map(e => e.$message))
 
 const signInAction = () => {
+	notification.notify({
+		clean: true,
+	})
+
 	if (v.value.$invalid) {
 		notification.notify({
 			text: "Not expected it to be called when fields are invalid",
