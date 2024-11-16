@@ -105,6 +105,10 @@ const handleRpcError = (err: RpcError) => {
 }
 
 const goToRegister = () => {
+	notification.notify({
+		clean: true,
+	})
+
 	router.push("/register")
 }
 
