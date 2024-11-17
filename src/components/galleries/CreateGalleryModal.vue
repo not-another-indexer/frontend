@@ -4,8 +4,13 @@ import { computed, ref } from 'vue';
 import { useCreateGallery } from '../../mutations/createGallery';
 import { useNotification } from '@kyvg/vue3-notification';
 import { useGalleryNameRules } from '../../validation/rules/gallery_name_rules';
+import { useGalleries } from '../../queries/galleries';
+import { helpers } from '@vuelidate/validators';
 
 const notification = useNotification()
+
+const { data } = useGalleries()
+const usedGalleryNames = computed(() => data.value ? data.value.pContent.map(v => v.pGalleryName) : [])
 
 const isOpened = defineModel('isOpened', { required: true })
 
@@ -14,7 +19,13 @@ const galleryNameRules = useGalleryNameRules()
 
 const v = useVuelidate(
   {
-    galleryName: galleryNameRules,
+    galleryName: {
+      ...galleryNameRules,
+      unique: helpers.withMessage(
+        "Gallery name must be unique", 
+        (value: string) => usedGalleryNames.value.indexOf(value) === -1
+      )
+    },
   },
   {
     galleryName,
