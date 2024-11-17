@@ -1,18 +1,16 @@
 <script setup lang="ts">
 import useVuelidate from '@vuelidate/core';
-import { helpers, required } from '@vuelidate/validators';
 import { computed, ref } from 'vue';
 import { useCreateGallery } from '../../mutations/createGallery';
 import { useNotification } from '@kyvg/vue3-notification';
+import { useGalleryNameRules } from '../../validation/rules/gallery_name_rules';
 
 const notification = useNotification()
 
 const isOpened = defineModel('isOpened', { required: true })
 
 const galleryName = ref("");
-const galleryNameRules = {
-  required: helpers.withMessage("Gallery name cannot be empty", required)
-}
+const galleryNameRules = useGalleryNameRules() 
 
 const v = useVuelidate(
   {
