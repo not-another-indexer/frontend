@@ -64,7 +64,7 @@ const isCreateGalleryModalOpened = ref(false)
     </div>
     <div v-else class="grid">
       <div class="cell" v-for="galleryPreview in data.pContent">
-        <SingleGallery :name="galleryPreview.pGalleryName" :id="galleryPreview.pGalleryUuid" />
+        <SingleGallery :name="galleryPreview.pGalleryName" :id="galleryPreview.pGalleryUuid" :image-ids="galleryPreview.pPreview" />
       </div>
     </div>
   </div>

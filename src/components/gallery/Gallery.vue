@@ -4,7 +4,8 @@ import { useGalleryImages } from '../../queries/gallery';
 import { useNotification } from '@kyvg/vue3-notification';
 import { ref } from 'vue';
 import AddImageModal from './AddImageModal.vue';
-import SingleImage from './SingleImage.vue';
+import Image from '../../assets/Image.vue';
+import ImageContent from './ImageContent.vue';
 
 const notification = useNotification()
 const router = useRouter()
@@ -66,9 +67,7 @@ const goToGalleries = () => {
     </div>
     <div v-else class="grid">
       <div class="cell" v-for="imageData in data.pContent">
-        <Suspense>
-          <SingleImage :id="imageData.pImageId" />
-        </Suspense>
+        <ImageContent :id="imageData.pImageId" />
       </div>
     </div>
   </div>
