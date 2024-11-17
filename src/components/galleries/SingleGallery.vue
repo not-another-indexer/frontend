@@ -41,7 +41,7 @@ const openGalleryAction = () => {
         {{ name }}
       </p>
 
-      <button class="button is-small" :class="{ 'is-danger': isDeleteHovered}" v-on:mouseenter="isDeleteHovered = true" v-on:mouseleave="isDeleteHovered = false" @click="deleteGalleryAction">
+      <button class="button is-small" :class="{ 'is-danger': isDeleteHovered}" v-on:mouseenter="isDeleteHovered = true" v-on:mouseleave="isDeleteHovered = false" @click.stop="deleteGalleryAction">
         <span class="icon">
           <i class="pi pi-trash" />
         </span>
