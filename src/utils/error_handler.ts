@@ -13,6 +13,7 @@ export const handleRpcError = (
       text: "You are not signed in. Please, do it",
       type: "warn",
       duration: -1, 
+      ignoreDuplicates: true,
     })
 
     router.push("/sign-in")
