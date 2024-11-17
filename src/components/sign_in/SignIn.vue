@@ -19,7 +19,7 @@ const username = ref("")
 const password = ref("")
 
 const usernameRules = {
-  required: helpers.withMessage("Login cannot be empty", required),
+  required: helpers.withMessage("Username cannot be empty", required),
 }
 const passwordRules = {
   required: helpers.withMessage("Password cannot be empty", required),
