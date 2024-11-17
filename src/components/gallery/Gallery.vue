@@ -4,7 +4,6 @@ import { useGalleryImages } from '../../queries/gallery';
 import { useNotification } from '@kyvg/vue3-notification';
 import { ref } from 'vue';
 import AddImageModal from './AddImageModal.vue';
-import Image from '../../assets/Image.vue';
 import ImageContent from './ImageContent.vue';
 
 const notification = useNotification()
@@ -13,12 +12,12 @@ const router = useRouter()
 const route = useRoute()
 const idParam = route.params["id"] as string
 
-const { data, refresh, id, size, offset } = useGalleryImages()
+const { data, refetch, id, size, offset } = useGalleryImages()
 id.value = idParam
 size.value = 5
 offset.value = 0
 
-refresh()
+refetch()
 
 const isAddImageButtonHovered = ref(false)
 
