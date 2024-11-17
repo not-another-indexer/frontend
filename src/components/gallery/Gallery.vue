@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useGalleryImages } from '../../queries/gallery';
 import { useNotification } from '@kyvg/vue3-notification';
 import { ref } from 'vue';
@@ -7,6 +7,7 @@ import AddImageModal from './AddImageModal.vue';
 import SingleImage from './SingleImage.vue';
 
 const notification = useNotification()
+const router = useRouter()
 
 const route = useRoute()
 const idParam = route.params["id"] as string
@@ -22,6 +23,10 @@ const isAddImageButtonHovered = ref(false)
 
 const isAddImageModalOpened = ref(false)
 
+const goToGalleries = () => {
+  router.push("/user/galleries")
+}
+
 </script>
 
 <template>
@@ -32,7 +37,12 @@ const isAddImageModalOpened = ref(false)
         <nav class="level">
           <div class="level-left">
             <div class="level-item">
- 
+              <button class="button" @click="goToGalleries">
+                <span class="icon is-small">
+                  <i class="pi pi-angle-left" />
+                </span>
+                <span>Back to galleries</span>
+              </button>
             </div>
           </div>
  
