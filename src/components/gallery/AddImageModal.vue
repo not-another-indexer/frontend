@@ -108,6 +108,9 @@ const addImageAction = () => {
   mutate()
 
   isOpened.value = false
+  isFileLoaded.value = false
+  imageBytes.value = new Uint8Array
+  description.value = ""
 }
 
 </script>
