@@ -37,7 +37,7 @@ const openGalleryAction = () => {
 
     <div class="field is-grouped">
 
-      <p class="is-text-overflow" v-on:mouseenter="">
+      <p class="is-text-overflow">
         {{ name }}
       </p>
 
