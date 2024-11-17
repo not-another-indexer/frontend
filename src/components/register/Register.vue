@@ -6,6 +6,9 @@ import { helpers, required, sameAs } from '@vuelidate/validators';
 import { useRouter } from 'vue-router';
 import { authServiceClient } from '../../transport';
 import { RpcError } from '@protobuf-ts/runtime-rpc';
+import { useUsernameRules } from '../../validation/rules/username';
+import { usePasswordRules } from '../../validation/rules/password';
+import { useDisplayNameRules } from '../../validation/rules/display_name';
 
 const notification = useNotification()
 const router = useRouter()
@@ -19,15 +22,9 @@ const displayName = ref("")
 const password = ref("")
 const repeatedPassword = ref("")
 
-const usernameRules = {
-  required: helpers.withMessage("Username cannot be empty", required),
-}
-const displayNameRules = {
-  required: helpers.withMessage("Display name cannot be not empty", required),
-}
-const passwordRules = {
-  required: helpers.withMessage("Password cannot be empty", required),
-}
+const usernameRules = useUsernameRules()
+const displayNameRules = useDisplayNameRules() 
+const passwordRules = usePasswordRules()
 const repeatedPasswordRules = {
   required: helpers.withMessage("Repeated password cannot be empty", required),
   passwordsEqual: helpers.withMessage("Passwords should be equal", sameAs(password)),
