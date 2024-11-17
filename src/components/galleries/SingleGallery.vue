@@ -2,10 +2,12 @@
 import { ref } from 'vue';
 import { useDeleteGallery } from '../../mutations/deleteGallery';
 import { useRouter } from 'vue-router';
+import Image from '../../assets/Image.vue';
 
 const props = defineProps<{
   name: string,
   id: string,
+  imageIds: string[],
 }>();
 
 const router = useRouter()
@@ -27,12 +29,14 @@ const openGalleryAction = () => {
 <template>
   <div class="box has-tooltip-bottom" :data-tooltip="name" @click="openGalleryAction">
 
-    <figure class="image is-16by9 has-radius-normal has-text-centered mb-3 has-background-text-90" >
-      <div class="is-fullheight">
+    <figure class="image is-16by9 has-radius-normal has-text-centered mb-3 has-background-text-90">
+      <div v-if="imageIds.length === 0" class="is-fullheight">
         <div class="container">
           Nothing to show
         </div>
       </div>
+      
+      <Image v-else :id="imageIds[0]" />
     </figure>
 
     <div class="field is-grouped">
