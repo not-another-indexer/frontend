@@ -67,8 +67,4 @@ const openGalleryAction = () => {
   white-space: nowrap;
   display: flex;
 }
-
-.image {
-  cursor: pointer;
-}
 </style>
