@@ -25,7 +25,7 @@ const openGalleryAction = () => {
 </script>
 
 <template>
-  <div class="box">
+  <div class="box has-tooltip-bottom" :data-tooltip="name">
 
     <figure class="image is-16by9 has-radius-normal has-text-centered mb-3 has-background-text-90" @click="openGalleryAction">
       <div class="is-fullheight">
