@@ -143,7 +143,7 @@ const goToRegister = () => {
 			</section>
 		</div>
 
-		<div class="hero-body">
+		<div class="hero-body has-background-image">
 			<div class="container">
 				<div class="columns is-centered">
 					<div class="column is-6">
@@ -186,4 +186,9 @@ const goToRegister = () => {
 </template>
 
 <style lang="scss" scoped>
+// .has-background-image {
+//  background-image: url(https://baldezh.top/uploads/posts/2022-08/1659657022_3-funart-pro-p-fon-dlya-kollazha-iz-fotografii-krasivo-3.jpg);
+//  background-size: contain;
+//  background-repeat: no-repeat;
+// }
 </style>
