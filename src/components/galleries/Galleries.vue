@@ -75,7 +75,7 @@ const isCreateGalleryModalOpened = ref(false)
 //   grid-template-columns: repeat(auto-fit, minmax(var(--bulma-grid-column-min), max-content));
 // }
 
-.cell {
-  max-width: 15rem;
-}
+// .cell {
+//   max-width: 15rem;
+// }
 </style>
