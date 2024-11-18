@@ -1,16 +1,28 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Image from '../../assets/Image.vue';
+import { useMutation, useQueryCache } from '@pinia/colada';
+import { deleteImage } from '../../requests/deleteImage';
 
 
 const props = defineProps<{
   id: string,
+  galleryId: string,
 }>()
 
 const isDeleteHovered = ref(false)
 
-const deleteImageAction = () => {
+const { mutate } = useMutation({
+  mutation: () => deleteImage(props.id),
+  onSettled: () => {
+    const queryCache = useQueryCache()
+    queryCache.invalidateQueries({ key: ['galleries'], exact: true })
+    queryCache.invalidateQueries({ key: ['galleryImages', props.galleryId ], exact: true })
+  }
+})
 
+const deleteImageAction = () => {
+  mutate()  
 }
 
 </script>
@@ -21,7 +33,7 @@ const deleteImageAction = () => {
       <Image :id="id" />
     </figure>
 
-    <button class="button is-small is-fullwidth" :class="{'is-danger': isDeleteHovered}" v-on:mouseenter="isDeleteHovered = true" v-on:mouseleave="isDeleteHovered = false">
+    <button @click="deleteImageAction" class="button is-small is-fullwidth" :class="{'is-danger': isDeleteHovered}" v-on:mouseenter="isDeleteHovered = true" v-on:mouseleave="isDeleteHovered = false">
       <span>
         Delete
       </span>
