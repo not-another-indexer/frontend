@@ -1,23 +1,23 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
-import { useGalleryImages } from '../../queries/gallery';
-import { useNotification } from '@kyvg/vue3-notification';
 import { ref } from 'vue';
 import AddImageModal from './AddImageModal.vue';
 import ImageContent from './ImageContent.vue';
+import { getGalleryImages } from '../../requests/getGalleryImages';
+import { useQuery } from '@pinia/colada';
 
-const notification = useNotification()
 const router = useRouter()
-
 const route = useRoute()
-const idParam = route.params["id"] as string
 
-const { data, refetch, id, size, offset } = useGalleryImages()
-id.value = idParam
-size.value = 5
-offset.value = 0
+const id = route.params["id"] as string
+const size = ref(5)
+const offset = ref(0)
 
-refetch()
+const { data } = useQuery({
+  key: () => ['galleryImages', id],
+  query: () => getGalleryImages(id, size.value, offset.value),
+})
+
 
 const isAddImageButtonHovered = ref(false)
 
@@ -30,7 +30,7 @@ const goToGalleries = () => {
 </script>
 
 <template>
-  <AddImageModal v-model:is-opened="isAddImageModalOpened" :gallery-id="idParam" />
+  <AddImageModal v-model:is-opened="isAddImageModalOpened" :gallery-id="id" />
   <section class="hero is-small">
     <div class="hero-body">
       <section class="hero is-small">
@@ -66,7 +66,7 @@ const goToGalleries = () => {
     </div>
     <div v-else class="grid">
       <div class="cell" v-for="imageData in data.pContent">
-        <ImageContent :id="imageData.pImageId" />
+        <ImageContent :id="imageData.pImageId" :gallery-id="id" />
       </div>
     </div>
   </div>
