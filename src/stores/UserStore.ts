@@ -32,6 +32,14 @@ const userUndefinedError = new UserUndefinedError(
   "User is undefined"
 )
 
+const LOCAL_STORAGE_KEY = "NAI_USER_TOKEN"
+
+interface LocalStorageData {
+  refreshToken: string,
+  displayName: string,
+  username: string,
+}
+
 export const useUserStore = defineStore("UserStore", {
   state: (): { user: State | undefined } => ({
     user: undefined
@@ -53,6 +61,14 @@ export const useUserStore = defineStore("UserStore", {
               displayName: response.pDisplayName,
               username: response.pUsername,
             }
+
+            const localStorageData: LocalStorageData = {
+              refreshToken: response.pRefreshToken,
+              displayName: response.pDisplayName,
+              username: response.pUsername,
+            }
+
+            localStorage[LOCAL_STORAGE_KEY] = JSON.stringify(localStorageData)
             resolve()
 		      },
 		      err => {
@@ -66,7 +82,19 @@ export const useUserStore = defineStore("UserStore", {
       action: (actualAccessToken: string) => UnaryCall<REQUEST, RESPONSE>,
     ): Promise<RESPONSE> {
       if (!this.user) {
-        throw userUndefinedError
+        const value = JSON.parse(localStorage[LOCAL_STORAGE_KEY])
+        if (!isLocalStorageData(value)) {
+          throw userUndefinedError
+        }
+        const data = value as LocalStorageData
+        
+        const accessToken = await refreshTokenAction(data.refreshToken)
+        this.user = {
+          accessToken: accessToken,
+          refreshToken: data.refreshToken,
+          displayName: data.displayName,
+          username: data.username,
+        }
       }
 
       try {
@@ -82,18 +110,29 @@ export const useUserStore = defineStore("UserStore", {
         }
       }
 
-      const request = {
-        pRefreshToken: this.user.refreshToken
-      }
-
-      try {
-        const call = await authServiceClient.refreshToken(request)
-        this.user.accessToken = call.response.pAccessToken
-      } catch (err: any) {
-        throw makeTokenRefreshError(err)
-      }
+      this.user.accessToken = await refreshTokenAction(this.user.refreshToken)
 
       return await action(this.user.accessToken).response
     },
   } 
 })
+
+const isLocalStorageData = (data: any): data is LocalStorageData => {
+  const localStorageData = data as LocalStorageData
+  return localStorageData.displayName !== undefined && 
+      localStorageData.refreshToken !== undefined && 
+      localStorageData.username !== undefined
+}
+
+const refreshTokenAction = async (refreshTokenValue: string): Promise<string> => {
+  const request = {
+    pRefreshToken: refreshTokenValue,
+  }
+
+  try {
+    const call = await authServiceClient.refreshToken(request)
+    return call.response.pAccessToken
+  } catch (err: any) {
+    throw makeTokenRefreshError(err)
+  }
+}
