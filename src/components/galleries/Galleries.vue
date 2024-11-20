@@ -4,7 +4,7 @@ import SingleGallery from './SingleGallery.vue';
 import CreateGalleryModal from './CreateGalleryModal.vue';
 import { useGalleries } from '../../queries/galleries';
 
-const { data } = useGalleries()
+const { data, asyncStatus } = useGalleries()
 
 const isCreateButtonHovered = ref(false)
 const isSearchButtonHovered = ref(false)
@@ -56,7 +56,7 @@ const isCreateGalleryModalOpened = ref(false)
     </div>
   </section>
 
-  <div v-if="data" class="container is-fluid">
+  <div v-if="asyncStatus === 'idle' && data" class="container is-fluid">
     <div v-if="data.pContent.length === 0" class="has-text-centered">
       No available galleries.
     </div>
