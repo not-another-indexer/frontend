@@ -51,7 +51,6 @@ const goToGalleries = () => {
                   </span>
                   <span>Back to galleries</span>
                 </button>
-                {{ asyncStatus }}
               </div>
               <div class="level-item">
                 <div class="dropdown">
