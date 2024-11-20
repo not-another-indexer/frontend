@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@creativebulma/bulma-tooltip": "^1.2.0",
+    "@creativebulma/bulma-tooltip": "deather/bulma-tooltip",
     "@kyvg/vue3-notification": "^3.4.0",
     "@pinia/colada": "^0.11.1",
     "@protobuf-ts/grpcweb-transport": "^2.9.4",
