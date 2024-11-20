@@ -1,0 +1,14 @@
+@forward 'bulma-slider' with (
+  $slider-output-width: 4rem
+);
+@import '@creativebulma/bulma-tooltip';
+@import 'bulma';
+@import 'primeicons/primeicons.css';
+
+.has-content-fullheight {
+  height: 100%;
+  text-align: center;
+  align-items: center;
+  display: flex;
+}
+

@@ -7,7 +7,7 @@ import { PiniaColada } from '@pinia/colada'
 import App from './App.vue'
 import Notifications from '@kyvg/vue3-notification'
 
-import './style.css'
+import './style.scss'
 
 const app = createApp(App)
 
