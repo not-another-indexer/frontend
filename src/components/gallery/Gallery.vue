@@ -13,7 +13,7 @@ const id = route.params["id"] as string
 const size = ref(5)
 const offset = ref(0)
 
-const { data } = useQuery({
+const { data, asyncStatus } = useQuery({
   key: () => ['galleryImages', id],
   query: () => getGalleryImages(id, size.value, offset.value),
 })
@@ -138,7 +138,7 @@ const goToGalleries = () => {
     </div>
   </section>
   
-  <div v-if="data" class="container is-fluid">
+  <div v-if="asyncStatus === 'idle' && data" class="container is-fluid">
     <div v-if="data.pContent.length === 0" class="has-text-centered">
       No available images.
     </div>
