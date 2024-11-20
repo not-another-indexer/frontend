@@ -30,7 +30,7 @@ const openGalleryAction = () => {
   <div class="box has-tooltip-bottom" :data-tooltip="name" @click="openGalleryAction">
 
     <figure class="image is-16by9 has-radius-normal has-text-centered mb-3 has-background-text-90">
-      <div v-if="imageIds.length === 0" class="is-fullheight">
+      <div v-if="imageIds.length === 0" class="has-content-fullheight">
         <div class="container">
           Nothing to show
         </div>
@@ -57,13 +57,6 @@ const openGalleryAction = () => {
 </template>
 
 <style scoped lang="scss">
-.is-fullheight {
-  height: 100%;
-  text-align: center;
-  align-items: center;
-  display: flex;
-}
-
 .is-text-overflow {
   flex: 1;
   overflow: hidden;
