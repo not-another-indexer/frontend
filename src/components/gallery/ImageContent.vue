@@ -14,10 +14,10 @@ const isDeleteHovered = ref(false)
 
 const { mutate } = useMutation({
   mutation: () => deleteImage(props.id),
-  onSettled: () => {
+  onSettled: async () => {
     const queryCache = useQueryCache()
-    queryCache.invalidateQueries({ key: ['galleries'], exact: true })
-    queryCache.invalidateQueries({ key: ['galleryImages', props.galleryId ], exact: true })
+    await queryCache.invalidateQueries({ key: ['galleryImages', { galleryId: props.galleryId }, ], exact: true })
+    await queryCache.invalidateQueries({ key: ['galleries'], exact: true })
   }
 })
 
