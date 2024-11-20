@@ -4,9 +4,7 @@ import SingleGallery from './SingleGallery.vue';
 import CreateGalleryModal from './CreateGalleryModal.vue';
 import { useGalleries } from '../../queries/galleries';
 
-const { data, refresh } = useGalleries()
-
-refresh()
+const { data } = useGalleries()
 
 const isCreateButtonHovered = ref(false)
 const isSearchButtonHovered = ref(false)
