@@ -22,6 +22,7 @@ export const handleRpcError = (
       text: "Cannot keep you signed in: " + err.message,
       type: "warn",
       duration: -1,
+      ignoreDuplicates: true,
     })
 
     router.push("/sign-in")
