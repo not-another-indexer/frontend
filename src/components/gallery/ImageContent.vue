@@ -16,7 +16,7 @@ const { mutate } = useMutation({
   mutation: () => deleteImage(props.id),
   onSettled: async () => {
     const queryCache = useQueryCache()
-    await queryCache.invalidateQueries({ key: ['galleryImages', { galleryId: props.galleryId }, ], exact: true })
+    await queryCache.invalidateQueries({ key: ['galleryImages', props.galleryId], exact: true })
     await queryCache.invalidateQueries({ key: ['galleries'], exact: true })
   }
 })
