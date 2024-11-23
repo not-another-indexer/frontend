@@ -13,8 +13,8 @@ const id = route.params["id"] as string
 const size = ref(5)
 const offset = ref(0)
 
-const { data, asyncStatus } = useQuery({
-  key: () => ['galleryImages', id],
+const { data, asyncStatus, refresh } = useQuery({
+  key: () => ['galleryImages', id, size.value, offset.value],
   query: () => getGalleryImages(id, size.value, offset.value),
 })
 
@@ -95,6 +95,27 @@ const goToGalleries = () => {
             </div>
           </nav>
         </div>
+      </nav>
+      <nav v-if="asyncStatus === 'idle' && data" class="pagination is-right" role="navigation" aria-label="pagination">
+        <button class="pagination-previous" @click="decrementPageAction" :disabled="offset === 0">
+          <span class="icon">
+            <i class="pi pi-angle-left" />
+          </span>
+        </button>
+        <button class="pagination-next" @click="incrementPageAction" :disabled="BigInt(offset + size) >= data.pTotal">
+          <span class="icon">
+            <i class="pi pi-angle-right"></i>
+          </span>
+        </button>
+        <ul class="pagination-list">
+          <li><button class="pagination-link" :class="{ 'is-current': Math.floor(offset / size) === 0 }" @click="goToPageAction(1)">1</button></li>
+          <li><span v-if="Math.floor((offset - size) / size) > 2" class="pagination-ellipsis">&hellip;</span></li>
+          <li><button v-if="Math.floor((offset - size) / size) > 0" class="pagination-link" @click="goToPageAction(Math.floor((offset - size) / size) + 1)">{{ Math.floor((offset - size) / size) + 1 }}</button></li>
+          <li><button v-if="Math.floor(offset / size) > 0" class="pagination-link is-current" @click="goToPageAction(Math.floor(offset / size) + 1)">{{ Math.floor(offset / size) + 1 }}</button></li>
+          <li><button v-if="data.pTotal - BigInt(offset + size) > 0" class="pagination-link" @click="goToPageAction(Math.floor((offset + size) / size) + 1)">{{ Math.floor((offset + size) / size) + 1 }}</button></li>
+          <li><span v-if="(data.pTotal - BigInt(offset + size)) / BigInt(size) > 1" class="pagination-ellipsis">&hellip;</span></li>
+          <li><button v-if="(data.pTotal - BigInt(offset + size)) / BigInt(size) > 0" class="pagination-link" :class="{ 'is-current': BigInt(offset + size) > data.pTotal }" @click="goToPageAction(Math.ceil(Number(data.pTotal) / size))">{{ Math.ceil(Number(data.pTotal) / size) }}</button></li>
+        </ul>
       </nav>
     </div>
   </section>
