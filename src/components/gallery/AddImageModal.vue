@@ -157,7 +157,9 @@ const addImageAction = () => {
         </div>
 
         <div class="field has-text-centered">
-          <button class="button is-primary" @click="addImageAction" :disabled="v.$invalid">Add image</button>
+          <button class="button is-primary" @click="addImageAction" :disabled="v.description.$invalid || v.extension.$invalid || v.imageBytes.$invalid">
+            Add image
+          </button>
         </div>
       </div>
     </div>
