@@ -5,6 +5,8 @@ import AddImageModal from './AddImageModal.vue';
 import ImageContent from './ImageContent.vue';
 import { getGalleryImages } from '../../requests/getGalleryImages';
 import { useQuery } from '@pinia/colada';
+import { searchImages, SearchParameters } from '../../requests/searchImages';
+import { SearchImagesResponse } from 'protos/gen/nai';
 
 const router = useRouter()
 const route = useRoute()
@@ -29,9 +31,45 @@ const recognizedFaceSimilarity = ref(0.5)
 const recognizedTextBm25Rank = ref(0.5)
 const textualDescriptionBm25Rank = ref(0.5)
 const query = ref("")
+const count = ref<bigint>(0n)
+
+const searchResult = ref<SearchImagesResponse | null>(null)
 
 const goToGalleries = () => {
   router.push("/user/galleries")
+}
+
+const searchAction = async () => {
+  const params: SearchParameters = {
+    SEMANTIC_ONE_PEACE_SIMILARITY: semanticOnePeaceSimilarity.value,
+    RECOGNIZED_TEXT_SIMILARITY: recognizedTextSimilarity.value,
+    TEXTUAL_DESCRIPTION_SIMILARITY: textualDescriptionSimilarity.value,
+    RECOGNIZED_FACE_SIMILARITY: recognizedFaceSimilarity.value,
+    RECOGNIZED_TEXT_BM25_RANK: recognizedTextBm25Rank.value,
+    TEXTUAL_DESCRIPTION_BM25_RANK: textualDescriptionBm25Rank.value,
+  }
+
+  searchResult.value = await searchImages(
+    query.value,
+    id,
+    params,
+    count.value,  
+  )
+}
+
+const goToPageAction = (page: number) => {
+  offset.value = (page - 1) * size.value
+  refresh() 
+}
+
+const decrementPageAction = () => {
+  offset.value -= size.value
+  refresh()
+}
+
+const incrementPageAction = () => {
+  offset.value += size.value
+  refresh()
 }
 
 </script>
