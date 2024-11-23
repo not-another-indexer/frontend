@@ -3,7 +3,7 @@ import useVuelidate from '@vuelidate/core';
 import { computed, ref } from 'vue';
 import { useCreateGallery } from '../../mutations/createGallery';
 import { useNotification } from '@kyvg/vue3-notification';
-import { useGalleryNameRules } from '../../validation/rules/gallery_name';
+import { useGalleryNameRules } from '../../validation/rules/gallery/gallery_name';
 import { useGalleries } from '../../queries/galleries';
 import { helpers } from '@vuelidate/validators';
 

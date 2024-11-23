@@ -2,8 +2,8 @@
 import { useNotification } from '@kyvg/vue3-notification';
 import { useAddImage } from '../../mutations/addImage';
 import useVuelidate from '@vuelidate/core';
-import { useDescriptionRules } from '../../validation/rules/description';
-import { useExtensionRules } from '../../validation/rules/extension';
+import { useDescriptionRules } from '../../validation/rules/image/description';
+import { useExtensionRules } from '../../validation/rules/image/extension';
 import { computed, ref } from 'vue';
 import { helpers } from '@vuelidate/validators';
 
