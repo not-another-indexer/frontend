@@ -65,7 +65,7 @@ export const useAddImage = defineMutation(() => {
     ),
     onSettled: async () => {
       const queryCache = useQueryCache()
-      await queryCache.invalidateQueries({ key: ['galleryImages', galleryId.value], exact: true })
+      await queryCache.invalidateQueries({ key: ['galleryImages', galleryId.value] })
       await queryCache.invalidateQueries({ key: ['galleries'], exact: true })
     }
   })
