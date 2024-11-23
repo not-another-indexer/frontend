@@ -14,6 +14,7 @@ const userStore = useUserStore()
 
 const isGoToRegisterButtonHovered = ref(false)
 const isPasswordHidden = ref(true)
+const isLoading = ref(false)
 
 const username = ref("")
 const password = ref("")
@@ -53,9 +54,20 @@ const signInAction = () => {
 		return
 	}
 
+	isLoading.value = true
+
 	userStore.signIn(username.value, password.value).then(
-		_ => handleSignInResponse(),
-		err => handleSignInError(err),
+		_ => {
+			handleSignInResponse()
+		}
+	).catch(
+		err => {
+			handleSignInError(err)
+		},
+	).finally(
+		() => {
+			isLoading.value = false
+		}
 	)	
 }
 
@@ -173,7 +185,7 @@ const goToRegister = () => {
               </div>
 
               <div class="field has-text-centered">
-                <button class="button is-link" @click="signInAction" :disabled="v.$invalid">
+                <button class="button is-link" :class="{ 'is-loading': isLoading }" @click="signInAction" :disabled="v.$invalid">
 									Sign in
 								</button>
               </div>

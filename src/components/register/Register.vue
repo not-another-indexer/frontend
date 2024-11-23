@@ -16,6 +16,7 @@ const router = useRouter()
 const isGoToSignInButtonHovered = ref(false)
 const isPasswordHidden = ref(true)
 const isRepeatedPasswordHidden = ref(true)
+const isLoading = ref(false)
 
 const username = ref("")
 const displayName = ref("")
@@ -60,6 +61,8 @@ const registerAction = async () => {
     return
   }
 
+  isLoading.value = true
+
   const request = {
     pUsername: username.value,
     pDisplayName: displayName.value,
@@ -69,12 +72,16 @@ const registerAction = async () => {
   authServiceClient.register(request, {}).then(
     _ => {
       handleRegisterResponse()
-    },
+    }
+  ).catch(
     err => {
       handleRegisterError(err)
     }
+  ).finally(
+    () => {
+      isLoading.value = false
+    }
   )
-
 }
 
 const handleRegisterResponse = () => {
@@ -188,7 +195,7 @@ const goToSignIn = () => {
               </div>
 
               <div class="field has-text-centered">
-                <button class="button is-link" @click="registerAction" :disabled="v.$invalid">Register</button>
+                <button class="button is-link" :class="{ 'is-loading': isLoading }" @click="registerAction" :disabled="v.$invalid">Register</button>
               </div>
             </div>
           </div>
