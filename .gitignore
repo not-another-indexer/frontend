@@ -30,3 +30,7 @@ src/assets/InputField.vue
 
 # protos
 protos/
+
+# build
+tsconfig.app.tsbuildinfo
+tsconfig.node.tsbuildinfo
