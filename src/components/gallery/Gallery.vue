@@ -6,12 +6,12 @@ import ImageContent from './ImageContent.vue';
 import { getGalleryImages } from '../../requests/getGalleryImages';
 import { useQuery } from '@pinia/colada';
 import { searchImages, SearchParameters } from '../../requests/searchImages';
-import { SearchImagesResponse } from 'protos/gen/nai';
 import { useNotification } from '@kyvg/vue3-notification';
 import { useQueryRules } from '../../validation/rules/search/query';
 import { useCountRules } from '../../validation/rules/search/count';
 import useVuelidate from '@vuelidate/core';
 import { helpers } from '@vuelidate/validators';
+import { SearchImagesResponse } from '../../protos/nai';
 
 const notification = useNotification()
 const router = useRouter()

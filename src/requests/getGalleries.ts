@@ -1,4 +1,4 @@
-import { GetGalleriesRequest, GetGalleriesResponse } from "protos/gen/nai"
+import { GetGalleriesResponse, GetGalleriesRequest } from "../protos/nai"
 import { useUserStore } from "../stores/UserStore"
 import { mainServiceClient } from "../transport"
 import { handleRpcError } from "../utils/error_handler"

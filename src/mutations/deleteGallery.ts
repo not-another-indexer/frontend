@@ -1,9 +1,10 @@
 import { useNotification } from "@kyvg/vue3-notification";
 import { useUserStore } from "../stores/UserStore";
 import { mainServiceClient } from "../transport";
-import { DeleteGalleryRequest, Empty } from "protos/gen/nai";
 import { handleRpcError } from "../utils/error_handler";
 import { defineMutation, useQueryCache } from "@pinia/colada";
+import { DeleteGalleryRequest } from "../protos/nai";
+import { Empty } from "../protos/nai_auth";
 
 const notification = useNotification()
 

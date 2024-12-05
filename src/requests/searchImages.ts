@@ -1,8 +1,8 @@
 import { useNotification } from "@kyvg/vue3-notification";
-import { SearchImagesRequest, SearchImagesResponse } from "protos/gen/nai";
 import { useUserStore } from "../stores/UserStore";
 import { galleryServiceClient } from "../transport";
 import { handleRpcError } from "../utils/error_handler";
+import { SearchImagesResponse, SearchImagesRequest } from "../protos/nai";
 
 const notification = useNotification()
 

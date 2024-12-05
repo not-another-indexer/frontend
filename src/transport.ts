@@ -1,7 +1,7 @@
 import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
 import { BACKEND_URL } from "./config";
-import { AuthServiceClient } from "protos/gen/nai_auth.client";
-import { GalleryServiceClient, MainServiceClient } from "protos/gen/nai.client"
+import { AuthServiceClient } from "./protos/nai_auth.client";
+import { GalleryServiceClient, MainServiceClient } from "./protos/nai.client";
 
 const transport = new GrpcWebFetchTransport({
   baseUrl: BACKEND_URL

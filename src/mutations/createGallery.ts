@@ -1,9 +1,9 @@
 import { useNotification } from "@kyvg/vue3-notification";
 import { defineMutation, useQueryCache } from "@pinia/colada";
 import { useUserStore } from "../stores/UserStore";
-import { CreateGalleryRequest, CreateGalleryResponse } from "protos/gen/nai";
 import { mainServiceClient } from "../transport";
 import { handleRpcError } from "../utils/error_handler";
+import { CreateGalleryResponse, CreateGalleryRequest } from "../protos/nai";
 
 const notification = useNotification()
 
