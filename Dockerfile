@@ -13,7 +13,6 @@ COPY tsconfig.app.json .
 COPY tsconfig.json .
 COPY tsconfig.node.json .
 COPY vite.config.ts .
-RUN chmod +x /usr/src/app/node_modules /usr/src/app/src /usr/src/app
 ENV PATH=$PATH:/usr/src/app/node_modules/.bin
 RUN bun install
 RUN bun install vite
