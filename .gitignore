@@ -24,8 +24,6 @@ dist-ssr
 *.sw?
 
 # env
-.env*
-!.env.example
 src/assets/InputField.vue
 
 # protos
