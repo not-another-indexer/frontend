@@ -30,7 +30,8 @@ const imageUrl = computed(() => {
   <div v-else-if="status === 'error'">
   </div>
   <div v-else>
-    <img :src="imageUrl" />
+<!-- TODO: Ёх... ѕридумать бы тут что то с размером изображени€  -->
+    <img :style="{ width: '300px', height: '200px', objectFit: 'cover' }" :src="imageUrl" />
   </div>
 </template>
 
