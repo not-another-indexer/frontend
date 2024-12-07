@@ -69,22 +69,33 @@ const goToGalleries = () => {
 }
 
 const searchAction = async () => {
-  const sum = semanticOnePeaceSimilarity.value + 
-      recognizedTextSimilarity.value + 
-      textualDescriptionSimilarity.value + 
-      recognizedFaceSimilarity.value + 
-      recognizedTextBm25Rank.value + 
-      textualDescriptionBm25Rank.value
+  function safeValue(value) {
+    value = parseFloat(value)
+    let pizza = isNaN(value) || typeof value !== 'number' ? 0.0 : value;
+    if (pizza > 1) {
+      return 1.0;
+    }
+    if (pizza < 0 ) {
+      return 0.0;
+    }
+    return pizza;
+  }
 
-  
+  const sum =
+      safeValue(semanticOnePeaceSimilarity.value) +
+      safeValue(recognizedTextSimilarity.value) +
+      safeValue(textualDescriptionSimilarity.value) +
+      safeValue(recognizedFaceSimilarity.value) +
+      safeValue(recognizedTextBm25Rank.value) +
+      safeValue(textualDescriptionBm25Rank.value);
 
   const params: SearchParameters = {
-    SEMANTIC_ONE_PEACE_SIMILARITY: semanticOnePeaceSimilarity.value / sum,
-    RECOGNIZED_TEXT_SIMILARITY: recognizedTextSimilarity.value / sum,
-    TEXTUAL_DESCRIPTION_SIMILARITY: textualDescriptionSimilarity.value / sum,
-    RECOGNIZED_FACE_SIMILARITY: recognizedFaceSimilarity.value / sum,
-    RECOGNIZED_TEXT_BM25_RANK: recognizedTextBm25Rank.value / sum,
-    TEXTUAL_DESCRIPTION_BM25_RANK: textualDescriptionBm25Rank.value / sum,
+    SEMANTIC_ONE_PEACE_SIMILARITY: safeValue(semanticOnePeaceSimilarity.value) / sum,
+    RECOGNIZED_TEXT_SIMILARITY: safeValue(recognizedTextSimilarity.value) / sum,
+    TEXTUAL_DESCRIPTION_SIMILARITY: safeValue(textualDescriptionSimilarity.value) / sum,
+    RECOGNIZED_FACE_SIMILARITY: safeValue(recognizedFaceSimilarity.value) / sum,
+    RECOGNIZED_TEXT_BM25_RANK: safeValue(recognizedTextBm25Rank.value) / sum,
+    TEXTUAL_DESCRIPTION_BM25_RANK: safeValue(textualDescriptionBm25Rank.value) / sum,
   }
 
   try {
