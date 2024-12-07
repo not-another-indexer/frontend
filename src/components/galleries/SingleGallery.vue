@@ -27,7 +27,7 @@ const openGalleryAction = () => {
 </script>
 
 <template>
-  <div class="box has-tooltip-bottom" :data-tooltip="name" @click="openGalleryAction">
+  <div :style="{ maxWidth: '350px', maxHeight: '250px' }" class="box has-tooltip-bottom" :data-tooltip="name" @click="openGalleryAction">
 
     <figure class="image is-16by9 has-radius-normal has-text-centered mb-3 has-background-text-90">
       <div v-if="imageIds.length === 0" class="has-content-fullheight">
