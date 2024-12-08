@@ -28,9 +28,9 @@ const deleteImageAction = () => {
 </script>
 
 <template>
-  <div :style="{ maxWidth: '350px', maxHeight: '250px' }" class="box">
+  <div class="box">
     <figure class="image has-radius-normal has-text-centered mb-3 has-background-text-90">
-      <Image  :id="id" />
+      <Image :id="id" />
     </figure>
 
     <button @click="deleteImageAction" class="button is-small is-fullwidth" :class="{'is-danger': isDeleteHovered}" v-on:mouseenter="isDeleteHovered = true" v-on:mouseleave="isDeleteHovered = false">
