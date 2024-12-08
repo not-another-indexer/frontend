@@ -37,7 +37,8 @@ const recognizedFaceSimilarity = ref(0.5)
 const recognizedTextBm25Rank = ref(0.5)
 const textualDescriptionBm25Rank = ref(0.5)
 const query = ref("")
-const count = ref<bigint>(0n)
+const count = ref<bigint>(10n)
+const maxCount = computed(() => (data.value ? data.value.pTotal : 10n).toString())
 
 const searchResult = ref<SearchImagesResponse | null>(null)
 
@@ -124,6 +125,23 @@ const decrementPageAction = () => {
 const incrementPageAction = () => {
   offset.value += size.value
   refresh()
+}
+
+const normalizeCount = () => {
+  if (count.value < 1n) {
+    count.value = 1n
+    return
+  }
+
+  if (data.value && data.value.pTotal < count.value) {
+    count.value = data.value.pTotal
+    return
+  }
+
+  if (Math.floor(Number(count.value)) !== Number(count.value)) {
+    count.value = BigInt(Math.floor(Number(count.value)))
+    return
+  }
 }
 
 </script>
@@ -265,7 +283,7 @@ const incrementPageAction = () => {
                 Count
               </label>
               <div class="control">
-                <input v-model="count" type="number" class="input" placeholder="e.g. 4">
+                <input v-model="count" type="number" min="1" step="1" :max="maxCount" class="input" placeholder="e.g. 4" v-on:focusout="normalizeCount">
               </div>
               <p v-if="v.count.$invalid" v-for="m in countErrorMessages" class="help is-danger">{{ m }}</p>
             </div>
