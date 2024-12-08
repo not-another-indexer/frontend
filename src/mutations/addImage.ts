@@ -76,6 +76,6 @@ export const useAddImage = defineMutation(() => {
     description,
     extension,
     mutate,
-    mutation,
+    ...mutation,
   }
 })
