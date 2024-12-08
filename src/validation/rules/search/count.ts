@@ -6,4 +6,8 @@ export const useCountRules = () => ({
     "The count must be greater then 0", 
     (value: bigint) => value > 0n,
   ),
+  isInteger: helpers.withMessage(
+    "The count must be integer",
+    (value: bigint) => Math.floor(Number(value)) === Number(value)
+  ),
 })
