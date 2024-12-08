@@ -16,7 +16,9 @@ const props = defineProps<{
 const isFileLoaded = ref(false)
 const fileName = ref("")
 
-const { mutate, imageBytes, galleryId, description, extension} = useAddImage()
+const isLoading = ref(false)
+
+const { mutateAsync, imageBytes, galleryId, description, extension } = useAddImage()
 galleryId.value = props.galleryId
 
 const descriptionRules = useDescriptionRules()
@@ -104,13 +106,20 @@ const onFileChange = (e: Event) => {
   reader.readAsArrayBuffer(file)
 }
 
-const addImageAction = () => {
-  mutate()
+const addImageAction = async () => {
+  isLoading.value = true
+  try {
+    await mutateAsync()
+  } catch (err: any) {
+    throw err
+  } finally {
+    isLoading.value = false
+  }
 
   isOpened.value = false
   isFileLoaded.value = false
-  // imageBytes.value = new Uint8Array
-  // description.value = ""
+  imageBytes.value = new Uint8Array
+  description.value = ""
 }
 
 </script>
@@ -124,14 +133,14 @@ const addImageAction = () => {
 
         <div class="field">
           <label class="label">Image description</label>
-          <textarea v-model="description" class="textarea" placeholder="e.g. Sunny morning" />
+          <textarea v-model="description" class="textarea" :disabled="isLoading" placeholder="e.g. Sunny morning" />
           <p v-if="v.description.$invalid" v-for="m in descriptionErrorMessages" class="help is-danger">{{ m }}</p>
         </div>
 
         <div class="field">
           <div v-if="isFileLoaded" class="file is-success has-name is-centered is-boxed is-fullwidth">
             <label class="file-label">
-              <input v-on:change="onFileChange" class="file-input" type="file" name="resume" accept=".jpg,.png,.jpeg">
+              <input v-on:change="onFileChange" class="file-input" :disabled="isLoading" type="file" name="resume" accept=".jpg,.png,.jpeg">
               <span class="file-cta">
                 <span class="file-icon">
                   <i class="pi pi-cloud-upload" />
@@ -145,7 +154,7 @@ const addImageAction = () => {
 
           <div v-else class="file is-success is-centered is-boxed is-fullwidth">
             <label class="file-label">
-              <input v-on:change="onFileChange" class="file-input" type="file" name="resume" accept=".jpg,.png,.jpeg">
+              <input v-on:change="onFileChange" class="file-input" :disabled="isLoading" type="file" name="resume" accept=".jpg,.png,.jpeg">
               <span class="file-cta">
                 <span class="file-icon">
                   <i class="pi pi-cloud-upload" />
@@ -157,7 +166,7 @@ const addImageAction = () => {
         </div>
 
         <div class="field has-text-centered">
-          <button class="button is-primary" @click="addImageAction" :disabled="v.description.$invalid || v.extension.$invalid || v.imageBytes.$invalid">
+          <button class="button is-primary" :class="{ 'is-loading': isLoading }" @click="addImageAction" :disabled="v.description.$invalid || v.extension.$invalid || v.imageBytes.$invalid">
             Add image
           </button>
         </div>
