@@ -29,7 +29,7 @@ const deleteImageAction = () => {
 
 <template>
   <div class="box">
-    <figure class="image has-radius-normal has-text-centered mb-3 has-background-text-90">
+    <figure class="image is-1by1 has-radius-normal has-text-centered mb-3 has-background-text-90">
       <Image :id="id" />
     </figure>
 
