@@ -106,6 +106,8 @@ const handleRegisterError = (err: any) => {
     text: message,
     type: "error",
   })
+
+  throw err
 }
 
 const goToSignIn = () => {

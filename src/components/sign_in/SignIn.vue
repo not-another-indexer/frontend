@@ -114,6 +114,8 @@ const handleRpcError = (err: RpcError) => {
 			})
 		}
 	}
+
+	throw err
 }
 
 const goToRegister = () => {
