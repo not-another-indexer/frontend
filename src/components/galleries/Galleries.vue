@@ -5,11 +5,17 @@ import CreateGalleryModal from './CreateGalleryModal.vue';
 import { useGalleries } from '../../queries/galleries';
 import { countScreenType } from '../../utils/window';
 import { screenTypeToNumberOfCols } from '../../utils/columns';
+import { useUserStore } from '../../stores/UserStore';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+
+const userStore = useUserStore()
 
 const { data, asyncStatus } = useGalleries()
 
 const isCreateButtonHovered = ref(false)
-const isSearchButtonHovered = ref(false)
+// const isSearchButtonHovered = ref(false)
 const isUserButtonHovered = ref(false)
 
 const isCreateGalleryModalOpened = ref(false)
@@ -18,6 +24,11 @@ window.addEventListener('resize', () => {
   numOfCols.value = screenTypeToNumberOfCols(countScreenType())
 })
 const numOfCols = ref(screenTypeToNumberOfCols(countScreenType()))
+
+const logoutAction = () => {
+  userStore.logout() 
+  router.push("/sign-in")
+}
 
 </script>
 
@@ -28,6 +39,16 @@ const numOfCols = ref(screenTypeToNumberOfCols(countScreenType()))
       <nav class="level">
         <div class="level-left">
           <div class="level-item">
+            <button class="button is-search-desktop is-icon" :class="{ 'has-background-warning-85': isUserButtonHovered, 'has-text-warning-85-invert': isUserButtonHovered }" @click="logoutAction" v-on:mouseenter="isUserButtonHovered = true" v-on:mouseleave="isUserButtonHovered = false">
+              <span class="icon">
+                <i class="pi pi-angle-left" />
+              </span>
+              <span>
+                Logout
+              </span>
+            </button>
+          </div>
+          <!-- <div class="level-item">
             <div class="field has-addons">
               <p class="control">
                 <input type="text" class="input" placeholder="Find a gallery">
@@ -38,7 +59,7 @@ const numOfCols = ref(screenTypeToNumberOfCols(countScreenType()))
                 </button>
               </p>
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="level-right">
           <nav class="level is-mobile">
@@ -48,13 +69,6 @@ const numOfCols = ref(screenTypeToNumberOfCols(countScreenType()))
             <div class="level-item">
               <button class="button" :class="{ 'is-primary': isCreateButtonHovered }" v-on:mouseenter="isCreateButtonHovered = true" v-on:mouseleave="isCreateButtonHovered = false" @click="isCreateGalleryModalOpened = true">
                 Create
-              </button>
-            </div>
-            <div class="level-item">
-              <button class="button is-search-desktop is-icon" :class="{ 'has-background-warning-85': isUserButtonHovered, 'has-text-warning-85-invert': isUserButtonHovered }" v-on:mouseenter="isUserButtonHovered = true" v-on:mouseleave="isUserButtonHovered = false">
-                <span class="icon">
-                  <i class="pi pi-user" />
-                </span>
               </button>
             </div>
           </nav>
