@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import SingleGallery from './SingleGallery.vue';
 import CreateGalleryModal from './CreateGalleryModal.vue';
 import { useGalleries } from '../../queries/galleries';
+import { countScreenType } from '../../utils/window';
+import { screenTypeToNumberOfCols } from '../../utils/columns';
 
 const { data, asyncStatus } = useGalleries()
 
@@ -11,6 +13,11 @@ const isSearchButtonHovered = ref(false)
 const isUserButtonHovered = ref(false)
 
 const isCreateGalleryModalOpened = ref(false)
+
+window.addEventListener('resize', () => {
+  numOfCols.value = screenTypeToNumberOfCols(countScreenType())
+})
+const numOfCols = ref(screenTypeToNumberOfCols(countScreenType()))
 
 </script>
 
@@ -60,9 +67,13 @@ const isCreateGalleryModalOpened = ref(false)
     <div v-if="data.pContent.length === 0" class="has-text-centered">
       No available galleries.
     </div>
-    <div v-else class="grid">
-      <div class="cell" v-for="galleryPreview in data.pContent">
-        <SingleGallery :name="galleryPreview.pGalleryName" :id="galleryPreview.pGalleryUuid" :image-ids="galleryPreview.pPreview" />
+    <div v-else>
+      <div class="fixed-grid" :class="{ 'has-1-cols': numOfCols === 1, 'has-2-cols': numOfCols === 2, 'has-3-cols': numOfCols === 3}">
+        <div class="grid">
+          <div class="cell" v-for="galleryPreview in data.pContent">
+            <SingleGallery :name="galleryPreview.pGalleryName" :id="galleryPreview.pGalleryUuid" :image-ids="galleryPreview.pPreview" />
+          </div> 
+        </div>
       </div>
     </div>
   </div>
