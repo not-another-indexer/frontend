@@ -30,9 +30,14 @@ const imageUrl = computed(() => {
   <div v-else-if="status === 'error'">
   </div>
   <div v-else>
-    <img :src="imageUrl" />
+    <img class="image-content" :src="imageUrl" />
   </div>
 </template>
 
+<!-- :style="{ 'background-image': `url(${imageUrl})`, 'background-size': 'cover' }" -->
+
 <style scoped lang="scss">
+.image-content {
+  object-fit: contain;
+}
 </style>
