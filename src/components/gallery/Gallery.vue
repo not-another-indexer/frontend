@@ -12,6 +12,8 @@ import { useCountRules } from '../../validation/rules/search/count';
 import useVuelidate from '@vuelidate/core';
 import { helpers } from '@vuelidate/validators';
 import { SearchImagesResponse } from '../../protos/nai';
+import { screenTypeToNumberOfCols } from '../../utils/columns';
+import { countScreenType } from '../../utils/window';
 
 const notification = useNotification()
 const router = useRouter()
@@ -64,6 +66,11 @@ const v = useVuelidate(
 
 const queryErrorMessages = computed(() => v.value.query.$silentErrors.map(e => e.$message))
 const countErrorMessages = computed(() => v.value.count.$silentErrors.map(e => e.$message))
+
+window.addEventListener('resize', () => {
+  numOfCols.value = screenTypeToNumberOfCols(countScreenType())
+})
+const numOfCols = ref(screenTypeToNumberOfCols(countScreenType()))
 
 const goToGalleries = () => {
   router.push("/user/galleries")
@@ -318,9 +325,11 @@ const normalizeCount = () => {
       <div v-if="data.pContent.length === 0" class="has-text-centered">
         No available images.
       </div>
-      <div v-else class="grid">
-        <div class="cell" v-for="imageData in data.pContent">
-          <ImageContent :id="imageData.pImageId" :gallery-id="id" />
+      <div v-else class="fixed-grid" :class="{ 'has-1-cols': numOfCols === 1, 'has-2-cols': numOfCols === 2, 'has-3-cols': numOfCols === 3}">
+        <div class="grid">
+          <div class="cell" v-for="imageData in data.pContent">
+            <ImageContent :id="imageData.pImageId" :gallery-id="id" />
+          </div>
         </div>
       </div>
     </div>
@@ -329,9 +338,11 @@ const normalizeCount = () => {
     <div v-if="searchResult.pContent.length === 0" class="has-text-centered">
       No images found.
     </div>
-    <div v-else class="grid">
-      <div class="cell" v-for="imageData in searchResult.pContent">
-        <ImageContent :id="imageData.pImage!!.pImageId" :gallery-id="id" />
+    <div v-else class="fixed-grid" :class="{ 'has-1-cols': numOfCols === 1, 'has-2-cols': numOfCols === 2, 'has-3-cols': numOfCols === 3}">
+      <div class="grid">
+        <div class="cell" v-for="imageData in searchResult.pContent">
+          <ImageContent :id="imageData.pImage!!.pImageId" :gallery-id="id" />
+        </div>
       </div>
     </div>
   </div>
