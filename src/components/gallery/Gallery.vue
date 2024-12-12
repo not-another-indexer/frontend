@@ -30,12 +30,12 @@ const isAddImageButtonHovered = ref(false)
 const isSearchDropdownActive = ref(false)
 const isAddImageModalOpened = ref(false)
 
-const semanticOnePeaceSimilarity = ref(0.5)
-const recognizedTextSimilarity = ref(0.5)
-const textualDescriptionSimilarity = ref(0.5)
-const recognizedFaceSimilarity = ref(0.5)
-const recognizedTextBm25Rank = ref(0.5)
-const textualDescriptionBm25Rank = ref(0.5)
+const semanticOnePeaceSimilarity = ref("0.5")
+const recognizedTextSimilarity = ref("0.5")
+const textualDescriptionSimilarity = ref("0.5")
+const recognizedFaceSimilarity = ref("0.5")
+const recognizedTextBm25Rank = ref("0.5")
+const textualDescriptionBm25Rank = ref("0.5")
 const query = ref("")
 const count = ref<bigint>(10n)
 const maxCount = computed(() => (data.value ? data.value.pTotal : 10n).toString())
@@ -69,23 +69,43 @@ const goToGalleries = () => {
   router.push("/user/galleries")
 }
 
+function safeValue(value: string) {
+  const floatValue = Number(value)
+  const validValue = isNaN(floatValue) ? 0.0 : floatValue;
+  if (validValue > 1) {
+    return 1.0;
+  }
+  if (validValue < 0 ) {
+    return 0.0;
+  }
+  return validValue;
+}
+
 const searchAction = async () => {
-  const sum = semanticOnePeaceSimilarity.value + 
-      recognizedTextSimilarity.value + 
-      textualDescriptionSimilarity.value + 
-      recognizedFaceSimilarity.value + 
-      recognizedTextBm25Rank.value + 
-      textualDescriptionBm25Rank.value
+  const semanticOnePeaceSimilaritySafe = safeValue(semanticOnePeaceSimilarity.value)
+  const recognizedTextSimilaritySafe = safeValue(recognizedTextSimilarity.value)
+  const textualDescriptionSimilaritySafe = safeValue(textualDescriptionSimilarity.value)
+  const recognizedFaceSimilaritySafe = safeValue(recognizedFaceSimilarity.value)
+  const recognizedTextBm25RankSafe = safeValue(recognizedTextBm25Rank.value)
+  const textualDescriptionBm25RankSafe = safeValue(textualDescriptionBm25Rank.value)
+
+  const sum = 
+      semanticOnePeaceSimilaritySafe + 
+      recognizedTextSimilaritySafe + 
+      textualDescriptionSimilaritySafe + 
+      recognizedFaceSimilaritySafe + 
+      recognizedTextBm25RankSafe + 
+      textualDescriptionBm25RankSafe
 
   
 
   const params: SearchParameters = {
-    SEMANTIC_ONE_PEACE_SIMILARITY: semanticOnePeaceSimilarity.value / sum,
-    RECOGNIZED_TEXT_SIMILARITY: recognizedTextSimilarity.value / sum,
-    TEXTUAL_DESCRIPTION_SIMILARITY: textualDescriptionSimilarity.value / sum,
-    RECOGNIZED_FACE_SIMILARITY: recognizedFaceSimilarity.value / sum,
-    RECOGNIZED_TEXT_BM25_RANK: recognizedTextBm25Rank.value / sum,
-    TEXTUAL_DESCRIPTION_BM25_RANK: textualDescriptionBm25Rank.value / sum,
+    SEMANTIC_ONE_PEACE_SIMILARITY: sum !== 0 ? semanticOnePeaceSimilaritySafe / sum : semanticOnePeaceSimilaritySafe,
+    RECOGNIZED_TEXT_SIMILARITY: sum !== 0 ? recognizedTextSimilaritySafe / sum : recognizedTextSimilaritySafe,
+    TEXTUAL_DESCRIPTION_SIMILARITY: sum !== 0 ? textualDescriptionSimilaritySafe / sum : textualDescriptionSimilaritySafe,
+    RECOGNIZED_FACE_SIMILARITY: sum !== 0 ? recognizedFaceSimilaritySafe / sum : recognizedFaceSimilaritySafe,
+    RECOGNIZED_TEXT_BM25_RANK: sum !== 0 ? recognizedTextBm25RankSafe / sum : recognizedTextBm25RankSafe,
+    TEXTUAL_DESCRIPTION_BM25_RANK: sum !== 0 ? textualDescriptionBm25RankSafe / sum : textualDescriptionBm25RankSafe,
   }
 
   try {
