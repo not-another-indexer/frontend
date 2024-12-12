@@ -114,6 +114,10 @@ export const useUserStore = defineStore("UserStore", {
 
       return await action(this.user.accessToken).response
     },
+    logout() {
+      this.user = undefined
+      localStorage[LOCAL_STORAGE_KEY] = ""
+    }
   } 
 })
 
