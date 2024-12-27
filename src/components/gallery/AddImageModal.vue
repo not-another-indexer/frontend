@@ -29,7 +29,7 @@ const v = useVuelidate(
     description: descriptionRules,
     extension: extensionRules,
     imageBytes: {
-      required: helpers.withMessage("The file cannot be empty", (value: Uint8Array) => value.length > 0)
+      required: helpers.withMessage("Файл не может быть пустым", (value: Uint8Array) => value.length > 0)
     },
   },
   {
@@ -49,7 +49,7 @@ const onFileChange = (e: Event) => {
 
   if (e.target === null) {
     notification.notify({
-      text: "Unexpected behaviour",
+      text: "Произошла неожиданная ошибка",
       type: "warn",
     })
 
@@ -59,7 +59,7 @@ const onFileChange = (e: Event) => {
   const target = e.target as HTMLInputElement
   if (!target || !target.files) {
     notification.notify({
-      "text": "Expected file",
+      "text": "Ожидался файл",
       "type": "warn",
     })
     
@@ -77,8 +77,8 @@ const onFileChange = (e: Event) => {
   extension.value = file.name.slice(file.name.lastIndexOf(".") + 1)
   if (v.value.extension.$invalid) {
     notification.notify({
-      title: "Selected invalid file",
-      text: "Possibly you selected file with wrong extension",
+      title: "Выбран неверный файл",
+      text: "Вероятно, вы выбрали файл с неподдерживаемым расширением",
       duration: -1,
     })
 
@@ -96,7 +96,7 @@ const onFileChange = (e: Event) => {
   }
   reader.onerror = (_) => {
     notification.notify({
-      text: "Failed to load file",
+      text: "Не удалось загрузить файл",
       type: "error",
       duration: -1,
     })
@@ -129,10 +129,10 @@ const addImageAction = async () => {
     <div class="modal-background"></div>
     <div class="modal-content">
       <div class="box">
-        <h3 class="title id-3 has-text-centered">Add new image</h3>
+        <h3 class="title id-3 has-text-centered">Добавить новое изображение</h3>
 
         <div class="field">
-          <label class="label">Image description</label>
+          <label class="label">Описание изображения</label>
           <textarea v-model="description" class="textarea" :disabled="isLoading" placeholder="e.g. Sunny morning" />
           <p v-if="v.description.$invalid" v-for="m in descriptionErrorMessages" class="help is-danger">{{ m }}</p>
         </div>
@@ -145,7 +145,7 @@ const addImageAction = async () => {
                 <span class="file-icon">
                   <i class="pi pi-cloud-upload" />
                 </span>
-                <span class="file-label has-text-centered">Change file</span>
+                <span class="file-label has-text-centered">Выбрать другой файл</span>
               </span>
               <span class="file-name has-text-centered">{{ fileName }}</span>
             </label>
@@ -159,7 +159,7 @@ const addImageAction = async () => {
                 <span class="file-icon">
                   <i class="pi pi-cloud-upload" />
                 </span>
-                <span class="file-label has-text-centered">Select file</span>
+                <span class="file-label has-text-centered">Выбрать файл</span>
               </span>
             </label>
           </div>
@@ -167,7 +167,7 @@ const addImageAction = async () => {
 
         <div class="field has-text-centered">
           <button class="button is-primary" :class="{ 'is-loading': isLoading }" @click="addImageAction" :disabled="v.description.$invalid || v.extension.$invalid || v.imageBytes.$invalid">
-            Add image
+            Добавить изображение
           </button>
         </div>
       </div>

@@ -44,7 +44,7 @@ const logoutAction = () => {
                 <i class="pi pi-angle-left" />
               </span>
               <span>
-                Logout
+                Выйти
               </span>
             </button>
           </div>
@@ -64,11 +64,11 @@ const logoutAction = () => {
         <div class="level-right">
           <nav class="level is-mobile">
             <div class="level-item">
-              Want to add another gallery?
+              Хотите добавить еще галлерею?
             </div>
             <div class="level-item">
               <button class="button" :class="{ 'is-primary': isCreateButtonHovered }" v-on:mouseenter="isCreateButtonHovered = true" v-on:mouseleave="isCreateButtonHovered = false" @click="isCreateGalleryModalOpened = true">
-                Create
+                добавить
               </button>
             </div>
           </nav>
@@ -79,7 +79,7 @@ const logoutAction = () => {
 
   <div v-if="asyncStatus === 'idle' && data" class="container is-fluid">
     <div v-if="data.pContent.length === 0" class="has-text-centered">
-      No available galleries.
+      Нет доступных галлерей
     </div>
     <div v-else>
       <div class="fixed-grid" :class="{ 'has-1-cols': numOfCols === 1, 'has-2-cols': numOfCols === 2, 'has-3-cols': numOfCols === 3}">

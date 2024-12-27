@@ -27,8 +27,8 @@ const usernameRules = useUsernameRules()
 const displayNameRules = useDisplayNameRules() 
 const passwordRules = usePasswordRules()
 const repeatedPasswordRules = {
-  required: helpers.withMessage("Repeated password cannot be empty", required),
-  passwordsEqual: helpers.withMessage("Passwords should be equal", sameAs(password)),
+  required: helpers.withMessage("Повторите пароль", required),
+  passwordsEqual: helpers.withMessage("Пароли должны совпадать", sameAs(password)),
 } 
 
 const v = useVuelidate(
@@ -86,7 +86,7 @@ const registerAction = async () => {
 
 const handleRegisterResponse = () => {
   notification.notify({
-    text: "Registered successfully",
+    text: "Регистрация прошла успешно",
     type: "success",
   })
 
@@ -97,9 +97,9 @@ const handleRegisterError = (err: any) => {
   let message = ""
   if (err instanceof RpcError) {
     const rpcErr = err as RpcError
-    message = "Cannot register user: " + rpcErr.message
+    message = "Не удалось зарегистрироваться: " + rpcErr.message
   } else {
-    message = "Cannot register user due to unknown error" 
+    message = "Не удалось зарегистрироваться из-за неожиданной ошибки. Повторите позже" 
   }
 
   notification.notify({
@@ -129,11 +129,11 @@ const goToSignIn = () => {
 								<div class="level-item">
 									<nav class="level is-mobile">
 										<div class="level-item">
-                      Already registered?
+                      Уже зарегистрированы
 										</div>
 										<div class="level-item">
 											<button @click="goToSignIn" class="button" :class="{ 'is-primary': isGoToSignInButtonHovered }" v-on:mouseenter="isGoToSignInButtonHovered = true" v-on:mouseleave="isGoToSignInButtonHovered = false">
-                        Sign in
+                        Войти
 											</button>
 										</div>
 									</nav>
@@ -150,28 +150,28 @@ const goToSignIn = () => {
         <div class="columns is-centered">
           <div class="column is-6">
             <div class="box">
-              <h2 class="title is-2 has-text-centered">Registration</h2>
+              <h2 class="title is-2 has-text-centered">Регистрация</h2>
 
               <div class="field">
-                <label class="label">Username</label>
+                <label class="label">Логин</label>
                 <div class="control">
-                  <input type="text" v-model="username" :class="{ 'is-danger': v.username.$invalid, 'input': true }" placeholder="For example: john_doe">
+                  <input type="text" v-model="username" :class="{ 'is-danger': v.username.$invalid, 'input': true }" placeholder="Например: john_doe">
                 </div>
                 <p v-if="v.username.$invalid" v-for="m in usernameErrorMessages" class="help is-danger">{{ m }}</p>
               </div>
 
               <div class="field">
-                <label class="label">Display name</label>
+                <label class="label">Отображаемое имя</label>
                 <div class="control">
-                  <input type="text" v-model="displayName" :class="{ 'is-danger': v.displayName.$invalid, 'input': true }" placeholder="For example: John">
+                  <input type="text" v-model="displayName" :class="{ 'is-danger': v.displayName.$invalid, 'input': true }" placeholder="Например: John">
                 </div>
                 <p v-if="v.displayName.$invalid" v-for="m in displayNameErrorMessages" class="help is-danger">{{ m }}</p>
               </div>
 
               <div class="field">
-                <label class="label">Password</label>
+                <label class="label">Пароль</label>
                 <nav class="level is-mobile">
-                  <input :type="isPasswordHidden ? 'password' : 'text'" v-model="password" :class="{ 'is-danger': v.password.$invalid, 'input': true }" placeholder="For example: ********">
+                  <input :type="isPasswordHidden ? 'password' : 'text'" v-model="password" :class="{ 'is-danger': v.password.$invalid, 'input': true }" placeholder="Например: ********">
     							<button class="button" @click="isPasswordHidden = !isPasswordHidden">
 										<span class="icon is-small">
       								<i v-if="isPasswordHidden" class="pi pi-eye-slash" />
@@ -183,9 +183,9 @@ const goToSignIn = () => {
               </div>
 
               <div class="field">
-                <label class="label">Repeat password</label>
+                <label class="label">Подтвердите пароль</label>
                 <nav class="level is-mobile">
-                  <input :type="isRepeatedPasswordHidden ? 'password' : 'text'" v-model="repeatedPassword" :class="{ 'is-danger': v.repeatedPassword.$invalid, 'input': true }" placeholder="For example: ********">
+                  <input :type="isRepeatedPasswordHidden ? 'password' : 'text'" v-model="repeatedPassword" :class="{ 'is-danger': v.repeatedPassword.$invalid, 'input': true }" placeholder="Например: ********">
     							<button class="button" @click="isRepeatedPasswordHidden = !isRepeatedPasswordHidden">
 										<span class="icon is-small">
       								<i v-if="isRepeatedPasswordHidden" class="pi pi-eye-slash" />

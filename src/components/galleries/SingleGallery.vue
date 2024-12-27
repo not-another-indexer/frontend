@@ -32,7 +32,7 @@ const openGalleryAction = () => {
     <figure class="image is-1by1 has-radius-normal has-text-centered mb-3 has-background-text-90">
       <div v-if="imageIds.length === 0" class="has-content-fullheight">
         <div class="container">
-          Nothing to show
+          Нет изображений
         </div>
       </div>
       

@@ -22,7 +22,7 @@ const v = useVuelidate(
     galleryName: {
       ...galleryNameRules,
       unique: helpers.withMessage(
-        "Gallery name must be unique", 
+        "Название галлереи должно быть уникальным", 
         (value: string) => usedGalleryNames.value.indexOf(value) === -1
       )
     },
@@ -58,10 +58,10 @@ const createGalleryAction = () => {
     <div class="modal-background"></div>
     <div class="modal-content">
       <div class="box">
-        <h3 class="title is-3 has-text-centered">Create new gallery</h3>
+        <h3 class="title is-3 has-text-centered">Создать галлерею</h3>
 
         <div class="field">
-          <label class="label">Gallery name</label>
+          <label class="label">Название</label>
           <div class="control">
             <input type="text" class="input" v-model="galleryName">
           </div>
@@ -69,7 +69,7 @@ const createGalleryAction = () => {
         </div>
 
         <div class="field has-text-centered">
-          <button class="button is-primary" :disabled="v.$invalid" @click="createGalleryAction">Create</button>
+          <button class="button is-primary" :disabled="v.$invalid" @click="createGalleryAction">Создать</button>
         </div>
       </div>
     </div>

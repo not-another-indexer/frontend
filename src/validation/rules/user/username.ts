@@ -1,11 +1,11 @@
 import { helpers, maxLength, minLength, required } from "@vuelidate/validators";
 
 export const useUsernameRules = () => ({
-  minLength: helpers.withMessage("The username must contain at least 3 characters", minLength(3)),
-  maxLength: helpers.withMessage("The user name must not exceed 64 characters", maxLength(64)),
-  required: helpers.withMessage("The username must not be empty", required),
+  minLength: helpers.withMessage("Логин должен содержать как минимум из 3 символов", minLength(3)),
+  maxLength: helpers.withMessage("Логин не может быть длиннее 64 символов", maxLength(64)),
+  required: helpers.withMessage ("Логин не может быть пустым", required),
   regex: helpers.withMessage(
-    "The user name can contain only letters, numbers, '-', or '_'", 
+    "Логин может содержать только латинские символы, числа, '-', или '_'", 
     helpers.regex(/^[a-zA-Z0-9_-]+$/)
   ),
 })

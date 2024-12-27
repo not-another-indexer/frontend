@@ -1,5 +1,5 @@
 import { helpers, required } from "@vuelidate/validators";
 
 export const useDisplayNameRules = () => ({
-  required: helpers.withMessage("The display name must not be empty", required)
+  required: helpers.withMessage("Отображаемое имя не может быть пустым", required)
 })

@@ -20,10 +20,10 @@ const username = ref("")
 const password = ref("")
 
 const usernameRules = {
-  required: helpers.withMessage("Username cannot be empty", required),
+  required: helpers.withMessage("Логин не может быть пуст", required),
 }
 const passwordRules = {
-  required: helpers.withMessage("Password cannot be empty", required),
+  required: helpers.withMessage("Пароль не может быть пуст", required),
 }
 
 const v = useVuelidate(
@@ -73,7 +73,7 @@ const signInAction = () => {
 
 const handleSignInResponse = () => {
 	notification.notify({
-		text: "Signed in successfully",
+		text: "Успешно",
 		type: "success",	
 	})
 
@@ -87,7 +87,7 @@ const handleSignInError = (err: any) => {
 	} 
 
 	notification.notify({
-		text: "Cannot sign in due to unknown error",
+		text: "Не удалось войти в систему из-за непредвиденной ошибки",
 		duration: -1,
 		type: "error",
 	})
@@ -97,8 +97,8 @@ const handleRpcError = (err: RpcError) => {
 	switch (err.code) {
 		case GrpcStatusCode[GrpcStatusCode.UNAUTHENTICATED]: {
 			notification.notify({
-				title: "Unable to sign in",
-				text: "Invalid username or password",
+				title: "Не удалось войти",
+				text: "Неправильный логин или пароль",
 				type: "error",
 				duration: -1,
 				ignoreDuplicates: true,
@@ -108,7 +108,7 @@ const handleRpcError = (err: RpcError) => {
 		}
 		default: {
 			notification.notify({
-				text: "Unexpected error, cannot sign in",
+				text: "Неожиданная ошибка: не удалось войти",
 				duration: -1,
 				type: "error",
 			})
@@ -141,11 +141,11 @@ const goToRegister = () => {
 								<div class="level-item">
 									<nav class="level is-mobile">
 										<div class="level-item">
-											Not registered yet?
+											Еще не зарегистрированы?
 										</div>
 										<div class="level-item">
 											<button @click="goToRegister" class="button" :class="{ 'is-primary': isGoToRegisterButtonHovered }" v-on:mouseenter="isGoToRegisterButtonHovered = true" v-on:mouseleave="isGoToRegisterButtonHovered = false">
-												Register
+												Зарегистрироваться
 											</button>
 										</div>
 									</nav>
@@ -162,20 +162,20 @@ const goToRegister = () => {
 				<div class="columns is-centered">
 					<div class="column is-6">
    	 				<div class="box">
-							<h2 class="title is-2 has-text-centered">Sign in</h2>
+							<h2 class="title is-2 has-text-centered">Войти</h2>
 
               <div class="field">
-                <label class="label">Username</label>
+                <label class="label">Логин</label>
                 <div class="control">
-                  <input type="text" v-model="username" :class="{ 'is-danger': v.username.$invalid, 'input': true }" placeholder="For example: john_doe">
+                  <input type="text" v-model="username" :class="{ 'is-danger': v.username.$invalid, 'input': true }" placeholder="Например: john_doe">
                 </div>
                 <p v-if="v.username.$invalid" v-for="m in usernameErrorMessages" class="help is-danger">{{ m }}</p>
               </div>
 
               <div class="field">
-                <label class="label">Password</label>
+                <label class="label">Пароль</label>
 								<nav class="level is-mobile">
-                  <input :type="isPasswordHidden ? 'password' : 'text'" v-model="password" :class="{ 'is-danger': v.password.$invalid, 'input': true }" placeholder="For example: ********">
+                  <input :type="isPasswordHidden ? 'password' : 'text'" v-model="password" :class="{ 'is-danger': v.password.$invalid, 'input': true }" placeholder="Например: ********">
     							<button class="button" @click="isPasswordHidden = !isPasswordHidden">
 										<span class="icon is-small">
       								<i v-if="isPasswordHidden" class="pi pi-eye-slash" />
@@ -188,7 +188,7 @@ const goToRegister = () => {
 
               <div class="field has-text-centered">
                 <button class="button is-link" :class="{ 'is-loading': isLoading }" @click="signInAction" :disabled="v.$invalid">
-									Sign in
+									Войти
 								</button>
               </div>
 						</div>

@@ -36,8 +36,8 @@ const semanticOnePeaceSimilarity = ref("0.5")
 const recognizedTextSimilarity = ref("0.5")
 const textualDescriptionSimilarity = ref("0.5")
 const recognizedFaceSimilarity = ref("0.5")
-const recognizedTextBm25Rank = ref("0.5")
-const textualDescriptionBm25Rank = ref("0.5")
+const recognizedTextBm25Rank = ref("1")
+const textualDescriptionBm25Rank = ref("1")
 const query = ref("")
 const count = ref<bigint>(10n)
 const maxCount = computed(() => (data.value ? data.value.pTotal : 10n).toString())
@@ -53,7 +53,7 @@ const v = useVuelidate(
     count: {
       ...countRules,
       maxValue: helpers.withMessage(
-        "The count must be less then total count",
+        "Выбрано кол-во больше максимального",
         (value: bigint) => data.value ? value <= data.value.pTotal : true,
       ),
     }
@@ -125,13 +125,13 @@ const searchAction = async () => {
   } catch (err: any) {
     if (err instanceof Error) {
       notification.notify({
-        title: "Unable to show search result",
+        title: "Не удается показать результат поиска",
         type: "error",
         ignoreDuplicates: true,
       })
     } else {
       notification.notify({
-        title: "Unable to show search result",
+        title: "Не удается показать результат поиска",
         type: "error",
         ignoreDuplicates: true,
       })
@@ -186,7 +186,7 @@ const normalizeCount = () => {
                   <span class="icon is-small">
                     <i class="pi pi-angle-left" />
                   </span>
-                  <span>Back to galleries</span>
+                  <span>Вернуться в галлереи</span>
                 </button>
               </div>
               <div class="level-item">
@@ -196,7 +196,7 @@ const normalizeCount = () => {
                       <span class="icon is-small">
                         <i class="pi pi-search"></i>
                       </span>
-                      <span>Search</span>
+                      <span>Поиск</span>
                       <span class="icon is-small">
                         <i class="pi" :class="{ 'pi-angle-right': !isSearchDropdownActive, 'pi-angle-down': isSearchDropdownActive }" aria-hidden="true"></i>
                       </span>
@@ -227,7 +227,7 @@ const normalizeCount = () => {
           <nav class="level is-mobile">
             <div v-if="searchResult === null" class="level-item">
               <button class="button" :class="{ 'is-primary': isAddImageButtonHovered }" v-on:mouseenter="isAddImageButtonHovered = true" v-on:mouseleave="isAddImageButtonHovered = false" @click="isAddImageModalOpened = true">
-                Add image
+                Добавить изображение
               </button> 
             </div>
             <div v-else class="level-item">
@@ -245,48 +245,49 @@ const normalizeCount = () => {
   <section v-if="isSearchDropdownActive"class="hero is-small">
     <div class="hero-body pt-0">
       <button class="button is-fullwidth is-info mb-4" @click="searchAction" :disabled="v.query.$invalid || v.count.$invalid">
-        Find images
+        Найти изображения
       </button>
       <nav class="level">
         <div class="level-item">
           <div class="container is-fluid">
-            <label class="label is-small my-0">Semantic one peace similarity</label>
+            <h4 class="title is-4 has-text-centered">Продвинутые параметры</h4>
+            <label class="label is-small my-0">Общее сходство</label>
             <input v-model="semanticOnePeaceSimilarity" class="slider is-small is-fullwidth is-primary is-circle has-output my-0" step="0.001" min="0" max="1" value="0.5" type="range" />
             <output class="has-text-primary-invert">{{ semanticOnePeaceSimilarity }}</output>
 
-            <label class="label is-small my-0">Recognized text similarity</label>
+            <label class="label is-small my-0">Распознанный на изображении текст</label>
             <input v-model="recognizedTextSimilarity" class="slider is-small is-fullwidth is-primary is-circle has-output my-0" step="0.001" min="0" max="1" value="0.5" type="range" />
             <output class="has-text-primary-invert">{{ recognizedTextSimilarity }}</output>
 
-            <label class="label is-small my-0">Textual description similarity</label>
+            <label class="label is-small my-0">Текстовое описание</label>
             <input v-model="textualDescriptionSimilarity" class="slider is-small is-fullwidth is-primary is-circle has-output my-0" step="0.001" min="0" max="1" value="0.5" type="range" />
             <output class="has-text-primary-invert">{{ textualDescriptionSimilarity }}</output>
 
-            <label class="label is-small my-0">Recognized face similarity</label>
+            <label class="label is-small my-0">Распознанные лица</label>
             <input v-model="recognizedFaceSimilarity" class="slider is-small is-fullwidth is-primary is-circle has-output my-0" step="0.001" min="0" max="1" value="0.5" type="range" />
             <output class="has-text-primary-invert">{{ recognizedFaceSimilarity }}</output>
 
-            <label class="label is-small my-0">Recognized text BM25 rank</label>
+            <!-- <label class="label is-small my-0">Recognized text BM25 rank</label>
             <input v-model="recognizedTextBm25Rank" class="slider is-small is-fullwidth is-primary is-circle has-output my-0" step="0.001" min="0" max="1" value="0.5" type="range" />
             <output class="has-text-primary-invert">{{ recognizedTextBm25Rank }}</output>
 
             <label class="label is-small my-0">Textual description BM25 rank</label>
             <input v-model="textualDescriptionBm25Rank" class="slider is-small is-fullwidth is-primary is-circle has-output my-0" step="0.001" min="0" max="1" value="0.5" type="range" />
-            <output class="has-text-primary-invert">{{ textualDescriptionBm25Rank }}</output>
+            <output class="has-text-primary-invert">{{ textualDescriptionBm25Rank }}</output> -->
           </div>
         </div>
         <div class="level-item">
           <div class="container is-fluid">
             <div class="field">
               <label class="label is-small">
-                Query
+                Запрос
               </label>
               <textarea v-model="query" class="textarea" placeholder="e.g. black cat"></textarea>
               <p v-if="v.query.$invalid" v-for="m in queryErrorMessages" class="help is-danger">{{ m }}</p>
             </div>
             <div class="field">
               <label class="label is-small">
-                Count
+                Количество изображений
               </label>
               <div class="control">
                 <input v-model="count" type="number" min="1" step="1" :max="maxCount" class="input" placeholder="e.g. 4" v-on:focusout="normalizeCount">
@@ -302,7 +303,7 @@ const normalizeCount = () => {
   <div v-if="searchResult === null">
     <div v-if="asyncStatus === 'idle' && data" class="container is-fluid">
       <div v-if="data.pContent.length === 0" class="has-text-centered">
-        No available images.
+        Изображения не найдены
       </div>
       <div v-else class="fixed-grid" :class="{ 'has-1-cols': numOfCols === 1, 'has-2-cols': numOfCols === 2, 'has-3-cols': numOfCols === 3}">
         <div class="grid">
@@ -315,7 +316,7 @@ const normalizeCount = () => {
   </div>
   <div v-else class="container is-fluid">
     <div v-if="searchResult.pContent.length === 0" class="has-text-centered">
-      No images found.
+      Изображения не найдены
     </div>
     <div v-else class="fixed-grid" :class="{ 'has-1-cols': numOfCols === 1, 'has-2-cols': numOfCols === 2, 'has-3-cols': numOfCols === 3}">
       <div class="grid">

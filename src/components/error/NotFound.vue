@@ -15,17 +15,17 @@ const goToGalleriesPage = () => {
       <div class="container">
         <div class="field">
           <p class="title is-1">
-            Ooooops...
+            Уууууууууупс.....
           </p>
         </div>
         <div class="field">
           <p class="subtitle is-3">
-            Something went wrong and now you are on non existing page
+            Что-то пошло не так, и вы оказались на несуществующей странице
           </p>
         </div>
         <div class="field has-text-centered">
           <button @click="goToGalleriesPage" class="button is-primary is-large is-fullwidth">
-            Go to galleries page
+            Перейти на страницу с галлереями
           </button>
         </div>
       </div>

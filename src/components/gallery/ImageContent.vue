@@ -35,7 +35,7 @@ const deleteImageAction = () => {
 
     <button @click="deleteImageAction" class="button is-small is-fullwidth" :class="{'is-danger': isDeleteHovered}" v-on:mouseenter="isDeleteHovered = true" v-on:mouseleave="isDeleteHovered = false">
       <span>
-        Delete
+        Удалить
       </span>
       <span class="icon">
         <i class="pi pi-trash" />
