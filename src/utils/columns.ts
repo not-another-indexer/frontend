@@ -3,14 +3,14 @@ import { ScreenType } from "./window";
 export function screenTypeToNumberOfCols(screenType: ScreenType): number {
   switch (screenType) {
     case ScreenType.MOBILE:
-      return 1
+      return 2
     case ScreenType.TABLET:
-      return 2
-    case ScreenType.DESKTOP:
-      return 2
-    case ScreenType.WIDESCREEN:
-      return 2
-    case ScreenType.FULL_HD:
       return 3
+    case ScreenType.DESKTOP:
+      return 3
+    case ScreenType.WIDESCREEN:
+      return 4
+    case ScreenType.FULL_HD:
+      return 5
   }
 } 

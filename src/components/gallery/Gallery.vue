@@ -20,7 +20,7 @@ const router = useRouter()
 const route = useRoute()
 
 const id = route.params["id"] as string
-const size = ref(5)
+const size = ref(30)
 const offset = ref(0)
 
 const { data, asyncStatus, refresh } = useQuery({
@@ -305,7 +305,7 @@ const normalizeCount = () => {
       <div v-if="data.pContent.length === 0" class="has-text-centered">
         Изображения не найдены
       </div>
-      <div v-else class="fixed-grid" :class="{ 'has-1-cols': numOfCols === 1, 'has-2-cols': numOfCols === 2, 'has-3-cols': numOfCols === 3}">
+      <div v-else class="fixed-grid" :class="{ 'has-1-cols': numOfCols === 1, 'has-2-cols': numOfCols === 2, 'has-3-cols': numOfCols === 3, 'has-4-cols': numOfCols === 4, 'has-5-cols': numOfCols === 5, 'has-6-cols': numOfCols === 6, 'has-7-cols': numOfCols === 7, 'has-8-cols': numOfCols === 8}">
         <div class="grid">
           <div class="cell" v-for="imageData in data.pContent">
             <ImageContent :id="imageData.pImageId" :gallery-id="id" />
